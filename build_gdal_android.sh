@@ -104,7 +104,7 @@ echo library will be exported to $prefix
 #setup compiler flags
 export CC="${toolchain}/bin/${host}-gcc"
 export LIBS="-lsupc++ -lstdc++"
-export CFLAGS="${extra_cflags}"
+export CFLAGS="${extra_cflags} -DHAVE_LONG_LONG"
 export LDFLAGS="${extra_ldflags}"
 export CXX="${toolchain}/bin/${host}-g++"
 export CXXFLAGS="${CFLAGS}"

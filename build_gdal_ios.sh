@@ -72,6 +72,7 @@ if [ $arch = "arm64" ]
     host="arm-apple-darwin"
 else
     host="${arch}-apple-darwin"
+    extra_cflags="${extra_cflags} -DHAVE_LONG_LONG"
 fi
  
 echo "building for host ${host}"

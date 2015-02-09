@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{FC730C86-89EA-464B-9F3E-4A1193B2798C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GDAL.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>GDAL.iOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="const\" />
+    <Folder Include="gdal\" />
+    <Folder Include="ogr\" />
+    <Folder Include="osr\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="libgdal.linkwith.cs">
+      <DependentUpon>libgdal.a</DependentUpon>
+    </Compile>
+    <Compile Include="libproj.linkwith.cs">
+      <DependentUpon>libproj.a</DependentUpon>
+    </Compile>
+    <Compile Include="const\GdalConst.cs" />
+    <Compile Include="const\GdalConstPINVOKE.cs" />
+    <Compile Include="gdal\Access.cs" />
+    <Compile Include="gdal\AsyncReader.cs" />
+    <Compile Include="gdal\AsyncStatusType.cs" />
+    <Compile Include="gdal\Band.cs" />
+    <Compile Include="gdal\CPLErr.cs" />
+    <Compile Include="gdal\ColorEntry.cs" />
+    <Compile Include="gdal\ColorInterp.cs" />
+    <Compile Include="gdal\ColorTable.cs" />
+    <Compile Include="gdal\DataType.cs" />
+    <Compile Include="gdal\Dataset.cs" />
+    <Compile Include="gdal\Driver.cs" />
+    <Compile Include="gdal\GCP.cs" />
+    <Compile Include="gdal\Gdal.cs" />
+    <Compile Include="gdal\GdalPINVOKE.cs" />
+    <Compile Include="gdal\MajorObject.cs" />
+    <Compile Include="gdal\PaletteInterp.cs" />
+    <Compile Include="gdal\RATFieldType.cs" />
+    <Compile Include="gdal\RATFieldUsage.cs" />
+    <Compile Include="gdal\RWFlag.cs" />
+    <Compile Include="gdal\RasterAttributeTable.cs" />
+    <Compile Include="gdal\ResampleAlg.cs" />
+    <Compile Include="gdal\SWIGTYPE_p_p_GDALRasterBandShadow.cs" />
+    <Compile Include="gdal\Transformer.cs" />
+    <Compile Include="gdal\XMLNode.cs" />
+    <Compile Include="gdal\XMLNodeType.cs" />
+    <Compile Include="ogr\CoordinateTransformation.cs" />
+    <Compile Include="ogr\DataSource.cs" />
+    <Compile Include="ogr\Driver.cs" />
+    <Compile Include="ogr\Envelope.cs" />
+    <Compile Include="ogr\Envelope3D.cs" />
+    <Compile Include="ogr\Feature.cs" />
+    <Compile Include="ogr\FeatureDefn.cs" />
+    <Compile Include="ogr\FieldDefn.cs" />
+    <Compile Include="ogr\FieldType.cs" />
+    <Compile Include="ogr\GeomFieldDefn.cs" />
+    <Compile Include="ogr\Geometry.cs" />
+    <Compile Include="ogr\Justification.cs" />
+    <Compile Include="ogr\Layer.cs" />
+    <Compile Include="ogr\Ogr.cs" />
+    <Compile Include="ogr\OgrPINVOKE.cs" />
+    <Compile Include="ogr\Osr.cs" />
+    <Compile Include="ogr\OsrPINVOKE.cs" />
+    <Compile Include="ogr\SpatialReference.cs" />
+    <Compile Include="ogr\StyleTable.cs" />
+    <Compile Include="ogr\wkbByteOrder.cs" />
+    <Compile Include="ogr\wkbGeometryType.cs" />
+    <Compile Include="osr\CoordinateTransformation.cs" />
+    <Compile Include="osr\Osr.cs" />
+    <Compile Include="osr\OsrPINVOKE.cs" />
+    <Compile Include="osr\SpatialReference.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
+  <ItemGroup>
+    <ObjcBindingNativeLibrary Include="libgdal.a" />
+    <ObjcBindingNativeLibrary Include="libproj.a" />
+  </ItemGroup>
+</Project>

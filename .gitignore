@@ -26,3 +26,18 @@
 *.exe
 *.out
 *.app
+
+,/
+dist/
+log/
+install/
+
+# Toolchain
+android-*-toolchain-*
+
+# tarball
+*.tar.gz
+
+# Xamarin
+GDAL*/obj/
+GDAL*/bin/
