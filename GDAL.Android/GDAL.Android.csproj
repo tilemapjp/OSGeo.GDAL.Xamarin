@@ -46,11 +46,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
-    <None Include="libgdal.a" />
-    <None Include="libproj.a" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="lib\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedNativeLibrary Include="lib\armeabi\libgdal.so" />
+    <EmbeddedNativeLibrary Include="lib\armeabi\libproj.so" />
+    <EmbeddedNativeLibrary Include="lib\armeabi-v7a\libgdal.so" />
+    <EmbeddedNativeLibrary Include="lib\armeabi-v7a\libproj.so" />
+    <EmbeddedNativeLibrary Include="lib\mips\libgdal.so" />
+    <EmbeddedNativeLibrary Include="lib\mips\libproj.so" />
+    <EmbeddedNativeLibrary Include="lib\x86\libgdal.so" />
+    <EmbeddedNativeLibrary Include="lib\x86\libproj.so" />
+  </ItemGroup>
 </Project>
