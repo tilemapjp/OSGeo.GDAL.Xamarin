@@ -3,7 +3,7 @@ set -u
  
 default_android_version=17
 default_architecture=arm
-default_ndk_root=/android-ndk-r9d
+default_ndk_root=/android-ndk-r10d
 default_prefix=${HOME}/Desktop/Android_GDAL
  
 export ANDROID_DEPLOYMENT_TARGET="${ANDROID_DEPLOYMENT_TARGET:-$default_android_version}"
@@ -45,25 +45,27 @@ shift $(( $OPTIND - 1 ))
  
 archname="${DEFAULT_ARCHITECTURE}"
 arch="${archname}"
+archdir="${arch}"
 
 case $arch in
  
         mips )
         extra_cflags=" "
         extra_ldflags=" "
-        host="mipsel-linux-android"        
+        host="mipsel-linux-android"
         ;;
  
         x86 )
         extra_cflags=" "
         extra_ldflags=" "
-        host="i686-linux-android"        
+        host="i686-linux-android"
         ;;
 
         arm )
         extra_cflags="-mthumb"
         extra_ldflags=" "
         host="arm-linux-androideabi"
+        archdir="armeabi"
         ;;
 
         armv7a )
@@ -71,6 +73,7 @@ case $arch in
         extra_cflags="-march=armv7-a -mfloat-abi=softfp"
         extra_ldflags="-Wl,--fix-cortex-a8"
         host="arm-linux-androideabi"
+        archdir="armeabi-v7a"
         ;;
  
         * )
@@ -96,7 +99,7 @@ echo "building for host ${host}"
  
 #platform_dir=`xcrun -find -sdk ${platform} --show-sdk-platform-path`
 #platform_sdk_dir=`xcrun -find -sdk ${platform} --show-sdk-path`
-prefix="${prefix}/${archname}/android-${ANDROID_DEPLOYMENT_TARGET}.sdk"
+prefix="${prefix}/android-${ANDROID_DEPLOYMENT_TARGET}.sdk/${archdir}"
  
 echo
 echo library will be exported to $prefix
@@ -104,7 +107,7 @@ echo library will be exported to $prefix
 #setup compiler flags
 export CC="${toolchain}/bin/${host}-gcc"
 export LIBS="-lsupc++ -lstdc++"
-export CFLAGS="${extra_cflags} -DHAVE_LONG_LONG"
+export CFLAGS="${extra_cflags} -DHAVE_LONG_LONG -pipe -Os -gdwarf-2"
 export LDFLAGS="${extra_ldflags}"
 export CXX="${toolchain}/bin/${host}-g++"
 export CXXFLAGS="${CFLAGS}"
@@ -142,8 +145,8 @@ echo
 echo "configure proj"
 ./configure \
     --prefix=${proj_prefix} \
-    --enable-shared=no \
-    --enable-static=yes \
+    --enable-shared=yes \
+    --enable-static=no \
     --host=$host \
     --without-jni \
     "$@" || exit
@@ -176,8 +179,8 @@ echo "configure gdal"
 ./configure \
     --prefix="${prefix}" \
     --host=$host \
-    --disable-shared \
-    --enable-static \
+    --enable-shared \
+    --disable-static \
     --with-hide-internal-symbols \
     --with-unix-stdio-64=no \
     --with-geos=no \
@@ -203,7 +206,7 @@ echo "configure gdal"
     --without-sde \
     --with-sse=no \
     --with-avx=no \
-    --with-static-proj4=${prefix} 
+    --with-proj4=${prefix} 
 #    --with-sqlite3=${platform_sdk_dir} \
     "$@" || exit
  
