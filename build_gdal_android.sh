@@ -2,7 +2,7 @@
 set -u
  
 default_android_version=17
-default_architecture=arm
+default_architecture=armeabi
 default_ndk_root=/android-ndk-r10d
 default_prefix=${HOME}/Desktop/Android_GDAL
  
@@ -17,7 +17,7 @@ cat >&2 << EOF
     Usage: ${0} [-h] [-p prefix] [-a arch] [-n ndk_root] [configure_args]
         -h  Print help message
         -p  Installation prefix (default: ${HOME}/Documents/Android_GDAL...)
-        -a  Architecture target for compilation (default: arm)
+        -a  Architecture target for compilation (default: armeabi)
         -n  Android NDK root (default: /android-ndk-r9d)
  
     Any additional arguments are passed to configure.
@@ -61,19 +61,18 @@ case $arch in
         host="i686-linux-android"
         ;;
 
-        arm )
+        armeabi )
+        arch=arm
         extra_cflags="-mthumb"
         extra_ldflags=" "
         host="arm-linux-androideabi"
-        archdir="armeabi"
         ;;
 
-        armv7a )
+        armeabi-v7a )
         arch=arm
         extra_cflags="-march=armv7-a -mfloat-abi=softfp"
         extra_ldflags="-Wl,--fix-cortex-a8"
         host="arm-linux-androideabi"
-        archdir="armeabi-v7a"
         ;;
  
         * )
