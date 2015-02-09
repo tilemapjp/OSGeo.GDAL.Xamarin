@@ -373,16 +373,16 @@ void GVeryQuiteErrorHandler(CPLErr eclass, int code, const char *msg ) {
 }
 
 
-void UseExceptions() {
+void GUseExceptions() {
   CPLSetErrorHandler( (CPLErrorHandler) GVeryQuiteErrorHandler );
 }
 
-void DontUseExceptions() {
+void GDontUseExceptions() {
   CPLSetErrorHandler( CPLDefaultErrorHandler );
 }
 
 
-    void StringListDestroy(void *buffer_ptr) {
+    void GStringListDestroy(void *buffer_ptr) {
        CSLDestroy((char**)buffer_ptr);
     }
 
@@ -1615,12 +1615,12 @@ int GetDriverCount() {
 }
 
 
-GDALDriverShadow* GetDriverByName( char const *name ) {
+GDALDriverShadow* GGetDriverByName( char const *name ) {
   return (GDALDriverShadow*) GDALGetDriverByName( name );
 }
 
 
-GDALDriverShadow* GetDriver( int i ) {
+GDALDriverShadow* GGetDriver( int i ) {
   return (GDALDriverShadow*) GDALGetDriver( i );
 }
 
@@ -1658,7 +1658,7 @@ GDALDriverShadow *IdentifyDriver( const char *utf8_path,
 }
 
 
-  char **GeneralCmdLineProcessor( char **papszArgv, int nOptions = 0 ) {
+  char **GGeneralCmdLineProcessor( char **papszArgv, int nOptions = 0 ) {
     int nResArgCount;
 
     nResArgCount = 
@@ -1697,12 +1697,12 @@ extern "C" {
 #endif
 
 SWIGEXPORT void SWIGSTDCALL CSharp_GUseExceptions() {
-  UseExceptions();
+  GUseExceptions();
 }
 
 
 SWIGEXPORT void SWIGSTDCALL CSharp_GDontUseExceptions() {
-  DontUseExceptions();
+  GDontUseExceptions();
 }
 
 
@@ -1712,7 +1712,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GStringListDestroy(void * jarg1) {
   arg1 = (void *)jarg1; 
   {
     CPLErrorReset();
-    StringListDestroy(arg1);
+    GStringListDestroy(arg1);
     CPLErr eclass = CPLGetLastErrorType();
     if ( eclass == CE_Failure || eclass == CE_Fatal ) {
       SWIG_CSharpException(SWIG_RuntimeError, CPLGetLastErrorMsg());
@@ -11764,7 +11764,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GGetDriverByName(char * jarg1) {
   }
   {
     CPLErrorReset();
-    result = (GDALDriverShadow *)GetDriverByName((char const *)arg1);
+    result = (GDALDriverShadow *)GGetDriverByName((char const *)arg1);
     CPLErr eclass = CPLGetLastErrorType();
     if ( eclass == CE_Failure || eclass == CE_Fatal ) {
       SWIG_CSharpException(SWIG_RuntimeError, CPLGetLastErrorMsg());
@@ -11797,7 +11797,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GGetDriver(int jarg1) {
   arg1 = (int)jarg1; 
   {
     CPLErrorReset();
-    result = (GDALDriverShadow *)GetDriver(arg1);
+    result = (GDALDriverShadow *)GGetDriver(arg1);
     CPLErr eclass = CPLGetLastErrorType();
     if ( eclass == CE_Failure || eclass == CE_Fatal ) {
       SWIG_CSharpException(SWIG_RuntimeError, CPLGetLastErrorMsg());
@@ -11958,7 +11958,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GGeneralCmdLineProcessor(void * jarg1, int 
   arg2 = (int)jarg2; 
   {
     CPLErrorReset();
-    result = (char **)GeneralCmdLineProcessor(arg1,arg2);
+    result = (char **)GGeneralCmdLineProcessor(arg1,arg2);
     CPLErr eclass = CPLGetLastErrorType();
     if ( eclass == CE_Failure || eclass == CE_Fatal ) {
       SWIG_CSharpException(SWIG_RuntimeError, CPLGetLastErrorMsg());
