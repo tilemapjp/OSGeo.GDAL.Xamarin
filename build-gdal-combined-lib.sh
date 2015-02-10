@@ -6,8 +6,8 @@ mkdir $PREFIX
 LOG=./log
 rm -rf $LOG
 mkdir $LOG
-IOS_DIST=`pwd`/GDAL.iOS/
-AND_DIST=`pwd`/GDAL.Android/
+IOS_DIST=`pwd`/OSGeo.GDAL.iOS/
+AND_DIST=`pwd`/OSGeo.GDAL.Android/
  
 if [ -e ${PREFIX} ]
 then

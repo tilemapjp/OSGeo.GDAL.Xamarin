@@ -41,3 +41,5 @@ android-*-toolchain-*
 # Xamarin
 GDAL*/obj/
 GDAL*/bin/
+OSGeo.GDAL*/obj/
+OSGeo.GDAL*/bin/

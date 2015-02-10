@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{FD6FD2AA-9660-44BA-9225-8FF50CF58457}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>OSGeo.GDAL.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)const\" />
+    <Folder Include="$(MSBuildThisFileDirectory)gdal\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ogr\" />
+    <Folder Include="$(MSBuildThisFileDirectory)osr\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)const\GdalConst.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)const\GdalConstPINVOKE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\Access.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\AsyncReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\AsyncStatusType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\Band.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\CPLErr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\ColorEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\ColorInterp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\ColorTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\DataType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\Dataset.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\Driver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\GCP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\Gdal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\GdalPINVOKE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\MajorObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\PaletteInterp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\RATFieldType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\RATFieldUsage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\RWFlag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\RasterAttributeTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\ResampleAlg.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\SWIGTYPE_p_p_GDALRasterBandShadow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\Transformer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\XMLNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)gdal\XMLNodeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\CoordinateTransformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\DataSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Driver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Envelope.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Envelope3D.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Feature.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\FeatureDefn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\FieldDefn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\FieldType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\GeomFieldDefn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Geometry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Justification.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Layer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Ogr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\OgrPINVOKE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\Osr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\OsrPINVOKE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\SpatialReference.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\StyleTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\wkbByteOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ogr\wkbGeometryType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)osr\CoordinateTransformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)osr\Osr.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)osr\OsrPINVOKE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)osr\SpatialReference.cs" />
+  </ItemGroup>
+</Project>

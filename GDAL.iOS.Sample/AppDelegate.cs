@@ -37,7 +37,7 @@ namespace GDAL.Sample
 			window.MakeKeyAndVisible ();
 
 			Console.WriteLine ("{0}",GdalConst.CE_Failure);
-			Gdal.AllRegister ();
+
 
 			var type = this.GetType(); 
 			var manifestResourceStream = type.Assembly.GetManifestResourceStream ("GDAL.Sample.bogota.tif");
