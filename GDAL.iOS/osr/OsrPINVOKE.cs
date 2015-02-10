@@ -5,6 +5,11 @@
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
+#if __IOS__
+using ObjCRuntime;
+#else
+using nint = global::System.Int32;
+#endif
 
 namespace OSGeo.OSR {
 
@@ -34,7 +39,11 @@ class OsrPINVOKE {
     static ExceptionArgumentDelegate argumentNullDelegate = new ExceptionArgumentDelegate(SetPendingArgumentNullException);
     static ExceptionArgumentDelegate argumentOutOfRangeDelegate = new ExceptionArgumentDelegate(SetPendingArgumentOutOfRangeException);
 
+#if __IOS__
     [DllImport("__Internal", EntryPoint="SWIGRegisterExceptionCallbacks_Osr")]
+#else
+    [DllImport("gdal", EntryPoint="SWIGRegisterExceptionCallbacks_Osr")]
+#endif
     public static extern void SWIGRegisterExceptionCallbacks_Osr(
                                 ExceptionDelegate applicationDelegate,
                                 ExceptionDelegate arithmeticDelegate,
@@ -48,54 +57,100 @@ class OsrPINVOKE {
                                 ExceptionDelegate overflowDelegate, 
                                 ExceptionDelegate systemExceptionDelegate);
 
+#if __IOS__
     [DllImport("__Internal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_Osr")]
+#else
+    [DllImport("gdal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_Osr")]
+#endif
     public static extern void SWIGRegisterExceptionCallbacksArgument_Osr(
                                 ExceptionArgumentDelegate argumentDelegate,
                                 ExceptionArgumentDelegate argumentNullDelegate,
                                 ExceptionArgumentDelegate argumentOutOfRangeDelegate);
 
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingApplicationException(string message) {
       SWIGPendingException.Set(new System.ApplicationException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingArithmeticException(string message) {
       SWIGPendingException.Set(new System.ArithmeticException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingDivideByZeroException(string message) {
       SWIGPendingException.Set(new System.DivideByZeroException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingIndexOutOfRangeException(string message) {
       SWIGPendingException.Set(new System.IndexOutOfRangeException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingInvalidCastException(string message) {
       SWIGPendingException.Set(new System.InvalidCastException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingInvalidOperationException(string message) {
       SWIGPendingException.Set(new System.InvalidOperationException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingIOException(string message) {
       SWIGPendingException.Set(new System.IO.IOException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingNullReferenceException(string message) {
       SWIGPendingException.Set(new System.NullReferenceException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingOutOfMemoryException(string message) {
       SWIGPendingException.Set(new System.OutOfMemoryException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingOverflowException(string message) {
       SWIGPendingException.Set(new System.OverflowException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingSystemException(string message) {
       SWIGPendingException.Set(new System.SystemException(message, SWIGPendingException.Retrieve()));
     }
 
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentException(string message, string paramName) {
       SWIGPendingException.Set(new System.ArgumentException(message, paramName, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentNullException(string message, string paramName) {
       Exception e = SWIGPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
       SWIGPendingException.Set(new System.ArgumentNullException(paramName, message));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentOutOfRangeException(string message, string paramName) {
       Exception e = SWIGPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
@@ -170,9 +225,16 @@ class OsrPINVOKE {
     public delegate string SWIGStringDelegate(string message);
     static SWIGStringDelegate stringDelegate = new SWIGStringDelegate(CreateString);
 
+#if __IOS__
     [DllImport("__Internal", EntryPoint="SWIGRegisterStringCallback_Osr")]
+#else
+    [DllImport("gdal", EntryPoint="SWIGRegisterStringCallback_Osr")]
+#endif
     public static extern void SWIGRegisterStringCallback_Osr(SWIGStringDelegate stringDelegate);
 
+#if __IOS__
+  [MonoPInvokeCallback (typeof(SWIGStringDelegate))]
+#endif
     static string CreateString(string cString) {
       return cString;
     }
@@ -193,10 +255,18 @@ class OsrPINVOKE {
   //}
 
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_UseExceptions")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_UseExceptions")]
+#endif
   public static extern void UseExceptions();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DontUseExceptions")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DontUseExceptions")]
+#endif
   public static extern void DontUseExceptions();
 
   public class StringListMarshal : IDisposable {
@@ -217,388 +287,900 @@ class OsrPINVOKE {
   }
 
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StringListDestroy")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StringListDestroy")]
+#endif
   public static extern void StringListDestroy(IntPtr jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetWellKnownGeogCSAsWKT")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetWellKnownGeogCSAsWKT")]
+#endif
   public static extern int GetWellKnownGeogCSAsWKT(string jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetUserInputAsWKT")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetUserInputAsWKT")]
+#endif
   public static extern int GetUserInputAsWKT(string jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetProjectionMethods")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetProjectionMethods")]
+#endif
   public static extern IntPtr GetProjectionMethods();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetProjectionMethodParameterList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetProjectionMethodParameterList")]
+#endif
   public static extern IntPtr GetProjectionMethodParameterList(string jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetProjectionMethodParamInfo")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetProjectionMethodParamInfo")]
+#endif
   public static extern void GetProjectionMethodParamInfo(string jarg1, string jarg2, out string jarg3, out string jarg4, ref double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_SpatialReference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_SpatialReference")]
+#endif
   public static extern IntPtr new_SpatialReference(string jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_SpatialReference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_SpatialReference")]
+#endif
   public static extern void delete_SpatialReference(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference___str__")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference___str__")]
+#endif
   public static extern string SpatialReference___str__(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsSame")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsSame")]
+#endif
   public static extern int SpatialReference_IsSame(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsSameGeogCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsSameGeogCS")]
+#endif
   public static extern int SpatialReference_IsSameGeogCS(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsSameVertCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsSameVertCS")]
+#endif
   public static extern int SpatialReference_IsSameVertCS(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsGeographic")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsGeographic")]
+#endif
   public static extern int SpatialReference_IsGeographic(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsProjected")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsProjected")]
+#endif
   public static extern int SpatialReference_IsProjected(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsCompound")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsCompound")]
+#endif
   public static extern int SpatialReference_IsCompound(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsGeocentric")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsGeocentric")]
+#endif
   public static extern int SpatialReference_IsGeocentric(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsLocal")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsLocal")]
+#endif
   public static extern int SpatialReference_IsLocal(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_IsVertical")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_IsVertical")]
+#endif
   public static extern int SpatialReference_IsVertical(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_EPSGTreatsAsLatLong")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_EPSGTreatsAsLatLong")]
+#endif
   public static extern int SpatialReference_EPSGTreatsAsLatLong(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_EPSGTreatsAsNorthingEasting")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_EPSGTreatsAsNorthingEasting")]
+#endif
   public static extern int SpatialReference_EPSGTreatsAsNorthingEasting(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetAuthority")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetAuthority")]
+#endif
   public static extern int SpatialReference_SetAuthority(HandleRef jarg1, string jarg2, string jarg3, int jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetAttrValue")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetAttrValue")]
+#endif
   public static extern string SpatialReference_GetAttrValue(HandleRef jarg1, string jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetAttrValue")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetAttrValue")]
+#endif
   public static extern int SpatialReference_SetAttrValue(HandleRef jarg1, string jarg2, string jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetAngularUnits")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetAngularUnits")]
+#endif
   public static extern int SpatialReference_SetAngularUnits(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetAngularUnits")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetAngularUnits")]
+#endif
   public static extern double SpatialReference_GetAngularUnits(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetTargetLinearUnits")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetTargetLinearUnits")]
+#endif
   public static extern int SpatialReference_SetTargetLinearUnits(HandleRef jarg1, string jarg2, string jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLinearUnits")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLinearUnits")]
+#endif
   public static extern int SpatialReference_SetLinearUnits(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLinearUnitsAndUpdateParameters")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLinearUnitsAndUpdateParameters")]
+#endif
   public static extern int SpatialReference_SetLinearUnitsAndUpdateParameters(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetLinearUnits")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetLinearUnits")]
+#endif
   public static extern double SpatialReference_GetLinearUnits(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetLinearUnitsName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetLinearUnitsName")]
+#endif
   public static extern string SpatialReference_GetLinearUnitsName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetAuthorityCode")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetAuthorityCode")]
+#endif
   public static extern string SpatialReference_GetAuthorityCode(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetAuthorityName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetAuthorityName")]
+#endif
   public static extern string SpatialReference_GetAuthorityName(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetUTM")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetUTM")]
+#endif
   public static extern int SpatialReference_SetUTM(HandleRef jarg1, int jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetUTMZone")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetUTMZone")]
+#endif
   public static extern int SpatialReference_GetUTMZone(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetStatePlane")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetStatePlane")]
+#endif
   public static extern int SpatialReference_SetStatePlane(HandleRef jarg1, int jarg2, int jarg3, string jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_AutoIdentifyEPSG")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_AutoIdentifyEPSG")]
+#endif
   public static extern int SpatialReference_AutoIdentifyEPSG(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetProjection")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetProjection")]
+#endif
   public static extern int SpatialReference_SetProjection(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetProjParm")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetProjParm")]
+#endif
   public static extern int SpatialReference_SetProjParm(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetProjParm")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetProjParm")]
+#endif
   public static extern double SpatialReference_GetProjParm(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetNormProjParm")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetNormProjParm")]
+#endif
   public static extern int SpatialReference_SetNormProjParm(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetNormProjParm")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetNormProjParm")]
+#endif
   public static extern double SpatialReference_GetNormProjParm(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetSemiMajor")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetSemiMajor")]
+#endif
   public static extern double SpatialReference_GetSemiMajor(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetSemiMinor")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetSemiMinor")]
+#endif
   public static extern double SpatialReference_GetSemiMinor(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetInvFlattening")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetInvFlattening")]
+#endif
   public static extern double SpatialReference_GetInvFlattening(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetACEA")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetACEA")]
+#endif
   public static extern int SpatialReference_SetACEA(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetAE")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetAE")]
+#endif
   public static extern int SpatialReference_SetAE(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetBonne")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetBonne")]
+#endif
   public static extern int SpatialReference_SetBonne(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetCEA")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetCEA")]
+#endif
   public static extern int SpatialReference_SetCEA(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetCS")]
+#endif
   public static extern int SpatialReference_SetCS(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetEC")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetEC")]
+#endif
   public static extern int SpatialReference_SetEC(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetEckertIV")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetEckertIV")]
+#endif
   public static extern int SpatialReference_SetEckertIV(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetEckertVI")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetEckertVI")]
+#endif
   public static extern int SpatialReference_SetEckertVI(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetEquirectangular")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetEquirectangular")]
+#endif
   public static extern int SpatialReference_SetEquirectangular(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetEquirectangular2")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetEquirectangular2")]
+#endif
   public static extern int SpatialReference_SetEquirectangular2(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGaussSchreiberTMercator")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGaussSchreiberTMercator")]
+#endif
   public static extern int SpatialReference_SetGaussSchreiberTMercator(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGS")]
+#endif
   public static extern int SpatialReference_SetGS(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGH")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGH")]
+#endif
   public static extern int SpatialReference_SetGH(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetIGH")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetIGH")]
+#endif
   public static extern int SpatialReference_SetIGH(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGEOS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGEOS")]
+#endif
   public static extern int SpatialReference_SetGEOS(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGnomonic")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGnomonic")]
+#endif
   public static extern int SpatialReference_SetGnomonic(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetHOM")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetHOM")]
+#endif
   public static extern int SpatialReference_SetHOM(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7, double jarg8);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetHOM2PNO")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetHOM2PNO")]
+#endif
   public static extern int SpatialReference_SetHOM2PNO(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7, double jarg8, double jarg9);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetKrovak")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetKrovak")]
+#endif
   public static extern int SpatialReference_SetKrovak(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7, double jarg8);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLAEA")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLAEA")]
+#endif
   public static extern int SpatialReference_SetLAEA(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLCC")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLCC")]
+#endif
   public static extern int SpatialReference_SetLCC(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLCC1SP")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLCC1SP")]
+#endif
   public static extern int SpatialReference_SetLCC1SP(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLCCB")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLCCB")]
+#endif
   public static extern int SpatialReference_SetLCCB(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetMC")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetMC")]
+#endif
   public static extern int SpatialReference_SetMC(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetMercator")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetMercator")]
+#endif
   public static extern int SpatialReference_SetMercator(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetMollweide")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetMollweide")]
+#endif
   public static extern int SpatialReference_SetMollweide(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetNZMG")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetNZMG")]
+#endif
   public static extern int SpatialReference_SetNZMG(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetOS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetOS")]
+#endif
   public static extern int SpatialReference_SetOS(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetOrthographic")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetOrthographic")]
+#endif
   public static extern int SpatialReference_SetOrthographic(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetPolyconic")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetPolyconic")]
+#endif
   public static extern int SpatialReference_SetPolyconic(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetPS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetPS")]
+#endif
   public static extern int SpatialReference_SetPS(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetRobinson")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetRobinson")]
+#endif
   public static extern int SpatialReference_SetRobinson(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetSinusoidal")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetSinusoidal")]
+#endif
   public static extern int SpatialReference_SetSinusoidal(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetStereographic")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetStereographic")]
+#endif
   public static extern int SpatialReference_SetStereographic(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetSOC")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetSOC")]
+#endif
   public static extern int SpatialReference_SetSOC(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetTM")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetTM")]
+#endif
   public static extern int SpatialReference_SetTM(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetTMVariant")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetTMVariant")]
+#endif
   public static extern int SpatialReference_SetTMVariant(HandleRef jarg1, string jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetTMG")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetTMG")]
+#endif
   public static extern int SpatialReference_SetTMG(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetTMSO")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetTMSO")]
+#endif
   public static extern int SpatialReference_SetTMSO(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetVDG")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetVDG")]
+#endif
   public static extern int SpatialReference_SetVDG(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetWellKnownGeogCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetWellKnownGeogCS")]
+#endif
   public static extern int SpatialReference_SetWellKnownGeogCS(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetFromUserInput")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetFromUserInput")]
+#endif
   public static extern int SpatialReference_SetFromUserInput(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_CopyGeogCSFrom")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_CopyGeogCSFrom")]
+#endif
   public static extern int SpatialReference_CopyGeogCSFrom(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetTOWGS84")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetTOWGS84")]
+#endif
   public static extern int SpatialReference_SetTOWGS84(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7, double jarg8);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_GetTOWGS84")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_GetTOWGS84")]
+#endif
   public static extern int SpatialReference_GetTOWGS84(HandleRef jarg1, double[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetLocalCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetLocalCS")]
+#endif
   public static extern int SpatialReference_SetLocalCS(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGeogCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGeogCS")]
+#endif
   public static extern int SpatialReference_SetGeogCS(HandleRef jarg1, string jarg2, string jarg3, string jarg4, double jarg5, double jarg6, string jarg7, double jarg8, string jarg9, double jarg10);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetProjCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetProjCS")]
+#endif
   public static extern int SpatialReference_SetProjCS(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetGeocCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetGeocCS")]
+#endif
   public static extern int SpatialReference_SetGeocCS(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetVertCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetVertCS")]
+#endif
   public static extern int SpatialReference_SetVertCS(HandleRef jarg1, string jarg2, string jarg3, int jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_SetCompoundCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_SetCompoundCS")]
+#endif
   public static extern int SpatialReference_SetCompoundCS(HandleRef jarg1, string jarg2, HandleRef jarg3, HandleRef jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromWkt")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromWkt")]
+#endif
   public static extern int SpatialReference_ImportFromWkt(HandleRef jarg1, ref string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromProj4")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromProj4")]
+#endif
   public static extern int SpatialReference_ImportFromProj4(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromUrl")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromUrl")]
+#endif
   public static extern int SpatialReference_ImportFromUrl(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromESRI")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromESRI")]
+#endif
   public static extern int SpatialReference_ImportFromESRI(HandleRef jarg1, IntPtr[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromEPSG")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromEPSG")]
+#endif
   public static extern int SpatialReference_ImportFromEPSG(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromEPSGA")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromEPSGA")]
+#endif
   public static extern int SpatialReference_ImportFromEPSGA(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromPCI")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromPCI")]
+#endif
   public static extern int SpatialReference_ImportFromPCI(HandleRef jarg1, string jarg2, string jarg3, double[] jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromUSGS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromUSGS")]
+#endif
   public static extern int SpatialReference_ImportFromUSGS(HandleRef jarg1, int jarg2, int jarg3, double[] jarg4, int jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromXML")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromXML")]
+#endif
   public static extern int SpatialReference_ImportFromXML(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromERM")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromERM")]
+#endif
   public static extern int SpatialReference_ImportFromERM(HandleRef jarg1, string jarg2, string jarg3, string jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromMICoordSys")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromMICoordSys")]
+#endif
   public static extern int SpatialReference_ImportFromMICoordSys(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ImportFromOzi")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ImportFromOzi")]
+#endif
   public static extern int SpatialReference_ImportFromOzi(HandleRef jarg1, string jarg2, string jarg3, string jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToWkt")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToWkt")]
+#endif
   public static extern int SpatialReference_ExportToWkt(HandleRef jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToPrettyWkt")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToPrettyWkt")]
+#endif
   public static extern int SpatialReference_ExportToPrettyWkt(HandleRef jarg1, out string jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToProj4")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToProj4")]
+#endif
   public static extern int SpatialReference_ExportToProj4(HandleRef jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToPCI")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToPCI")]
+#endif
   public static extern int SpatialReference_ExportToPCI(HandleRef jarg1, out string jarg2, out string jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToUSGS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToUSGS")]
+#endif
   public static extern int SpatialReference_ExportToUSGS(HandleRef jarg1, out int jarg2, out int jarg3, out int jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToXML")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToXML")]
+#endif
   public static extern int SpatialReference_ExportToXML(HandleRef jarg1, out string jarg2, string jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_ExportToMICoordSys")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_ExportToMICoordSys")]
+#endif
   public static extern int SpatialReference_ExportToMICoordSys(HandleRef jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_CloneGeogCS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_CloneGeogCS")]
+#endif
   public static extern IntPtr SpatialReference_CloneGeogCS(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_Clone")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_Clone")]
+#endif
   public static extern IntPtr SpatialReference_Clone(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_Validate")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_Validate")]
+#endif
   public static extern int SpatialReference_Validate(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_StripCTParms")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_StripCTParms")]
+#endif
   public static extern int SpatialReference_StripCTParms(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_FixupOrdering")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_FixupOrdering")]
+#endif
   public static extern int SpatialReference_FixupOrdering(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_Fixup")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_Fixup")]
+#endif
   public static extern int SpatialReference_Fixup(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_MorphToESRI")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_MorphToESRI")]
+#endif
   public static extern int SpatialReference_MorphToESRI(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SpatialReference_MorphFromESRI")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SpatialReference_MorphFromESRI")]
+#endif
   public static extern int SpatialReference_MorphFromESRI(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_CoordinateTransformation")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_CoordinateTransformation")]
+#endif
   public static extern IntPtr new_CoordinateTransformation(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_CoordinateTransformation")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_CoordinateTransformation")]
+#endif
   public static extern void delete_CoordinateTransformation(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CoordinateTransformation_TransformPoint__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CoordinateTransformation_TransformPoint__SWIG_0")]
+#endif
   public static extern void CoordinateTransformation_TransformPoint__SWIG_0(HandleRef jarg1, double[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CoordinateTransformation_TransformPoint__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CoordinateTransformation_TransformPoint__SWIG_1")]
+#endif
   public static extern void CoordinateTransformation_TransformPoint__SWIG_1(HandleRef jarg1, double[] jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CoordinateTransformation_TransformPoints")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CoordinateTransformation_TransformPoints")]
+#endif
   public static extern void CoordinateTransformation_TransformPoints(HandleRef jarg1, int jarg2, double[] jarg3, double[] jarg4, double[] jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CreateCoordinateTransformation")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CreateCoordinateTransformation")]
+#endif
   public static extern IntPtr CreateCoordinateTransformation(HandleRef jarg1, HandleRef jarg2);
 }
 
