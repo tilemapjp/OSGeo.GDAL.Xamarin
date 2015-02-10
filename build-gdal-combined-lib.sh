@@ -66,5 +66,5 @@ mkdir -p ${AND_DIST}/lib/${f} | tee $LOG/android-copy.txt
 rm -f ${AND_DIST}/lib/${f}/libproj.so
 cp -f ${PREFIX}/android-${ANDROID_DEPLOYMENT_TARGET}.sdk/${f}/lib/libproj.so.*.*.* ${AND_DIST}/lib/${f}/libproj.so | tee $LOG/android-copy.txt
 rm -f ${AND_DIST}/lib/${f}/libgdal.so
-cp -f ${PREFIX}/android-${ANDROID_DEPLOYMENT_TARGET}.sdk/${f}/lib/libgdal.so.*.*.* ${AND_DIST}/lib/${f}/libgdal.a | tee $LOG/android-copy.txt
+cp -f ${PREFIX}/android-${ANDROID_DEPLOYMENT_TARGET}.sdk/${f}/lib/libgdal.so.*.*.* ${AND_DIST}/lib/${f}/libgdal.so | tee $LOG/android-copy.txt
 done

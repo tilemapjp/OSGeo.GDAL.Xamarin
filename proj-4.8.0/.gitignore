@@ -1,0 +1,8 @@
+config.log
+config.status
+
+libtool
+Makefile
+proj.pc
+
+src/.deps

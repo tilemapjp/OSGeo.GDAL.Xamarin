@@ -5,7 +5,11 @@
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
+#if __IOS__
 using ObjCRuntime;
+#else
+using nint = global::System.Int32;
+#endif
 
 namespace OSGeo.GDAL {
 
@@ -35,8 +39,12 @@ class GdalConstPINVOKE {
     static ExceptionArgumentDelegate argumentNullDelegate = new ExceptionArgumentDelegate(SetPendingArgumentNullException);
     static ExceptionArgumentDelegate argumentOutOfRangeDelegate = new ExceptionArgumentDelegate(SetPendingArgumentOutOfRangeException);
 
-    [DllImport("__Internal", EntryPoint="SWIGRegisterExceptionCallbacks_GdalConst")]
-    public static extern void SWIGRegisterExceptionCallbacks_GdalConst(
+#if __IOS__
+	[DllImport("__Internal", EntryPoint="SWIGRegisterExceptionCallbacks_GdalConst")]
+#else
+	[DllImport("gdal", EntryPoint="SWIGRegisterExceptionCallbacks_GdalConst")]
+#endif
+	public static extern void SWIGRegisterExceptionCallbacks_GdalConst(
                                 ExceptionDelegate applicationDelegate,
                                 ExceptionDelegate arithmeticDelegate,
                                 ExceptionDelegate divideByZeroDelegate, 
@@ -49,68 +57,99 @@ class GdalConstPINVOKE {
                                 ExceptionDelegate overflowDelegate, 
                                 ExceptionDelegate systemExceptionDelegate);
 
-    [DllImport("__Internal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_GdalConst")]
-    public static extern void SWIGRegisterExceptionCallbacksArgument_GdalConst(
+#if __IOS__
+	[DllImport("__Internal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_GdalConst")]
+#else
+	[DllImport("gdal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_GdalConst")]
+#endif
+	public static extern void SWIGRegisterExceptionCallbacksArgument_GdalConst(
                                 ExceptionArgumentDelegate argumentDelegate,
                                 ExceptionArgumentDelegate argumentNullDelegate,
                                 ExceptionArgumentDelegate argumentOutOfRangeDelegate);
-
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingApplicationException(string message) {
       SWIGPendingException.Set(new System.ApplicationException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
-    static void SetPendingArithmeticException(string message) {
+#endif
+	static void SetPendingArithmeticException(string message) {
       SWIGPendingException.Set(new System.ArithmeticException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingDivideByZeroException(string message) {
       SWIGPendingException.Set(new System.DivideByZeroException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingIndexOutOfRangeException(string message) {
       SWIGPendingException.Set(new System.IndexOutOfRangeException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingInvalidCastException(string message) {
       SWIGPendingException.Set(new System.InvalidCastException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingInvalidOperationException(string message) {
       SWIGPendingException.Set(new System.InvalidOperationException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingIOException(string message) {
       SWIGPendingException.Set(new System.IO.IOException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingNullReferenceException(string message) {
       SWIGPendingException.Set(new System.NullReferenceException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingOutOfMemoryException(string message) {
       SWIGPendingException.Set(new System.OutOfMemoryException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingOverflowException(string message) {
       SWIGPendingException.Set(new System.OverflowException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingSystemException(string message) {
       SWIGPendingException.Set(new System.SystemException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentException(string message, string paramName) {
       SWIGPendingException.Set(new System.ArgumentException(message, paramName, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
-    static void SetPendingArgumentNullException(string message, string paramName) {
+#endif
+	static void SetPendingArgumentNullException(string message, string paramName) {
       Exception e = SWIGPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
       SWIGPendingException.Set(new System.ArgumentNullException(paramName, message));
     }
+#if __IOS__
 	[MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
-    static void SetPendingArgumentOutOfRangeException(string message, string paramName) {
+#endif
+	static void SetPendingArgumentOutOfRangeException(string message, string paramName) {
       Exception e = SWIGPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
       SWIGPendingException.Set(new System.ArgumentOutOfRangeException(paramName, message));
@@ -184,11 +223,17 @@ class GdalConstPINVOKE {
     public delegate string SWIGStringDelegate(string message);
     static SWIGStringDelegate stringDelegate = new SWIGStringDelegate(CreateString);
 
-    [DllImport("__Internal", EntryPoint="SWIGRegisterStringCallback_GdalConst")]
-    public static extern void SWIGRegisterStringCallback_GdalConst(SWIGStringDelegate stringDelegate);
+#if __IOS__
+	[DllImport("__Internal", EntryPoint="SWIGRegisterStringCallback_GdalConst")]
+#else
+	[DllImport("gdal", EntryPoint="SWIGRegisterStringCallback_GdalConst")]
+#endif
+	public static extern void SWIGRegisterStringCallback_GdalConst(SWIGStringDelegate stringDelegate);
 
+#if __IOS__
 	[MonoPInvokeCallback (typeof(SWIGStringDelegate))]
-    static string CreateString(string cString) {
+#endif
+	static string CreateString(string cString) {
       return cString;
     }
 
@@ -203,344 +248,795 @@ class GdalConstPINVOKE {
   static GdalConstPINVOKE() {
   }
 
-
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_Unknown_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Unknown_get")]
+#endif
   public static extern nint GDT_Unknown_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_Byte_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Byte_get")]
+#endif
   public static extern nint GDT_Byte_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_UInt16_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_UInt16_get")]
+#endif
   public static extern nint GDT_UInt16_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_Int16_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Int16_get")]
+#endif
   public static extern nint GDT_Int16_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_UInt32_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_UInt32_get")]
+#endif
   public static extern nint GDT_UInt32_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_Int32_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Int32_get")]
+#endif
   public static extern nint GDT_Int32_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_Float32_get")]
-  public static extern nint GDT_Float32_get();
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Float32_get")]
+#endif
+public static extern nint GDT_Float32_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_Float64_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Float64_get")]
+#endif
   public static extern nint GDT_Float64_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_CInt16_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_Float64_get")]
+#endif
   public static extern nint GDT_CInt16_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_CInt32_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_CInt32_get")]
+#endif
   public static extern nint GDT_CInt32_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_CFloat32_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_CFloat32_get")]
+#endif
   public static extern nint GDT_CFloat32_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_CFloat64_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_CFloat64_get")]
+#endif
   public static extern nint GDT_CFloat64_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDT_TypeCount_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDT_TypeCount_get")]
+#endif
   public static extern nint GDT_TypeCount_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GA_ReadOnly_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GA_ReadOnly_get")]
+#endif
   public static extern nint GA_ReadOnly_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GA_Update_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GA_Update_get")]
+#endif
   public static extern nint GA_Update_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GF_Read_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GF_Read_get")]
+#endif
   public static extern nint GF_Read_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GF_Write_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GF_Write_get")]
+#endif
   public static extern nint GF_Write_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_Undefined_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_Undefined_get")]
+#endif
   public static extern nint GCI_Undefined_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_GrayIndex_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_GrayIndex_get")]
+#endif
   public static extern nint GCI_GrayIndex_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_PaletteIndex_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_PaletteIndex_get")]
+#endif
   public static extern nint GCI_PaletteIndex_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_RedBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_RedBand_get")]
+#endif
   public static extern nint GCI_RedBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_GreenBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_GreenBand_get")]
+#endif
   public static extern nint GCI_GreenBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_BlueBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_BlueBand_get")]
+#endif
   public static extern nint GCI_BlueBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_AlphaBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_AlphaBand_get")]
+#endif
   public static extern nint GCI_AlphaBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_HueBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_HueBand_get")]
+#endif
   public static extern nint GCI_HueBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_SaturationBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_SaturationBand_get")]
+#endif
   public static extern nint GCI_SaturationBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_LightnessBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_LightnessBand_get")]
+#endif
   public static extern nint GCI_LightnessBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_CyanBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_CyanBand_get")]
+#endif
   public static extern nint GCI_CyanBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_MagentaBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_MagentaBand_get")]
+#endif
   public static extern nint GCI_MagentaBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_YellowBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_YellowBand_get")]
+#endif
   public static extern nint GCI_YellowBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_BlackBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_BlackBand_get")]
+#endif
   public static extern nint GCI_BlackBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_YCbCr_YBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_YCbCr_YBand_get")]
+#endif
   public static extern nint GCI_YCbCr_YBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_YCbCr_CrBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_YCbCr_CrBand_get")]
+#endif
   public static extern nint GCI_YCbCr_CrBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GCI_YCbCr_CbBand_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GCI_YCbCr_CbBand_get")]
+#endif
   public static extern nint GCI_YCbCr_CbBand_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_NearestNeighbour_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_NearestNeighbour_get")]
+#endif
   public static extern nint GRA_NearestNeighbour_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_Bilinear_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_Bilinear_get")]
+#endif
   public static extern nint GRA_Bilinear_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_Cubic_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_Cubic_get")]
+#endif
   public static extern nint GRA_Cubic_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_CubicSpline_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_CubicSpline_get")]
+#endif
   public static extern nint GRA_CubicSpline_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_Lanczos_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_Lanczos_get")]
+#endif
   public static extern nint GRA_Lanczos_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_Average_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_Average_get")]
+#endif
   public static extern nint GRA_Average_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GRA_Mode_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GRA_Mode_get")]
+#endif
   public static extern nint GRA_Mode_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GPI_Gray_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GPI_Gray_get")]
+#endif
   public static extern nint GPI_Gray_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GPI_RGB_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GPI_RGB_get")]
+#endif
   public static extern nint GPI_RGB_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GPI_CMYK_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GPI_CMYK_get")]
+#endif
   public static extern nint GPI_CMYK_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GPI_HLS_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GPI_HLS_get")]
+#endif
   public static extern nint GPI_HLS_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CXT_Element_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CXT_Element_get")]
+#endif
   public static extern nint CXT_Element_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CXT_Text_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CXT_Text_get")]
+#endif
   public static extern nint CXT_Text_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CXT_Attribute_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CXT_Attribute_get")]
+#endif
   public static extern nint CXT_Attribute_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CXT_Comment_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CXT_Comment_get")]
+#endif
   public static extern nint CXT_Comment_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CXT_Literal_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CXT_Literal_get")]
+#endif
   public static extern nint CXT_Literal_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CE_None_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CE_None_get")]
+#endif
   public static extern nint CE_None_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CE_Debug_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CE_Debug_get")]
+#endif
   public static extern nint CE_Debug_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CE_Warning_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CE_Warning_get")]
+#endif
   public static extern nint CE_Warning_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CE_Failure_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CE_Failure_get")]
+#endif
   public static extern nint CE_Failure_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CE_Fatal_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CE_Fatal_get")]
+#endif
   public static extern nint CE_Fatal_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_None_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_None_get")]
+#endif
   public static extern nint CPLE_None_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_AppDefined_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_AppDefined_get")]
+#endif
   public static extern nint CPLE_AppDefined_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_OutOfMemory_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_OutOfMemory_get")]
+#endif
   public static extern nint CPLE_OutOfMemory_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_FileIO_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_FileIO_get")]
+#endif
   public static extern nint CPLE_FileIO_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_OpenFailed_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_OpenFailed_get")]
+#endif
   public static extern nint CPLE_OpenFailed_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_IllegalArg_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_IllegalArg_get")]
+#endif
   public static extern nint CPLE_IllegalArg_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_NotSupported_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_NotSupported_get")]
+#endif
   public static extern nint CPLE_NotSupported_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_AssertionFailed_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_AssertionFailed_get")]
+#endif
   public static extern nint CPLE_AssertionFailed_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_NoWriteAccess_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_NoWriteAccess_get")]
+#endif
   public static extern nint CPLE_NoWriteAccess_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLE_UserInterrupt_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLE_UserInterrupt_get")]
+#endif
   public static extern nint CPLE_UserInterrupt_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_LONGNAME_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_LONGNAME_get")]
+#endif
   public static extern string GDAL_DMD_LONGNAME_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_HELPTOPIC_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_HELPTOPIC_get")]
+#endif
   public static extern string GDAL_DMD_HELPTOPIC_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_MIMETYPE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_MIMETYPE_get")]
+#endif
   public static extern string GDAL_DMD_MIMETYPE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_EXTENSION_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_EXTENSION_get")]
+#endif
   public static extern string GDAL_DMD_EXTENSION_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_CREATIONOPTIONLIST_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_CREATIONOPTIONLIST_get")]
+#endif
   public static extern string GDAL_DMD_CREATIONOPTIONLIST_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_CREATIONDATATYPES_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_CREATIONDATATYPES_get")]
+#endif
   public static extern string GDAL_DMD_CREATIONDATATYPES_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DMD_SUBDATASETS_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DMD_SUBDATASETS_get")]
+#endif
   public static extern string GDAL_DMD_SUBDATASETS_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DCAP_CREATE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DCAP_CREATE_get")]
+#endif
   public static extern string GDAL_DCAP_CREATE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DCAP_CREATECOPY_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DCAP_CREATECOPY_get")]
+#endif
   public static extern string GDAL_DCAP_CREATECOPY_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GDAL_DCAP_VIRTUALIO_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GDAL_DCAP_VIRTUALIO_get")]
+#endif
   public static extern string GDAL_DCAP_VIRTUALIO_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLES_BackslashQuotable_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLES_BackslashQuotable_get")]
+#endif
   public static extern nint CPLES_BackslashQuotable_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLES_XML_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLES_XML_get")]
+#endif
   public static extern nint CPLES_XML_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLES_URL_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLES_URL_get")]
+#endif
   public static extern nint CPLES_URL_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLES_SQL_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLES_SQL_get")]
+#endif
   public static extern nint CPLES_SQL_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CPLES_CSV_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CPLES_CSV_get")]
+#endif
   public static extern nint CPLES_CSV_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFT_Integer_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFT_Integer_get")]
+#endif
   public static extern nint GFT_Integer_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFT_Real_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFT_Real_get")]
+#endif
   public static extern nint GFT_Real_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFT_String_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFT_String_get")]
+#endif
   public static extern nint GFT_String_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Generic_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Generic_get")]
+#endif
   public static extern nint GFU_Generic_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_PixelCount_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_PixelCount_get")]
+#endif
   public static extern nint GFU_PixelCount_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Name_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Name_get")]
+#endif
   public static extern nint GFU_Name_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Min_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Min_get")]
+#endif
   public static extern nint GFU_Min_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Max_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Max_get")]
+#endif
   public static extern nint GFU_Max_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_MinMax_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_MinMax_get")]
+#endif
   public static extern nint GFU_MinMax_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Red_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Red_get")]
+#endif
   public static extern nint GFU_Red_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Green_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Green_get")]
+#endif
   public static extern nint GFU_Green_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Blue_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Blue_get")]
+#endif
   public static extern nint GFU_Blue_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_Alpha_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_Alpha_get")]
+#endif
   public static extern nint GFU_Alpha_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_RedMin_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_RedMin_get")]
+#endif
   public static extern nint GFU_RedMin_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_GreenMin_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_GreenMin_get")]
+#endif
   public static extern nint GFU_GreenMin_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_BlueMin_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_BlueMin_get")]
+#endif
   public static extern nint GFU_BlueMin_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_AlphaMin_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_AlphaMin_get")]
+#endif
   public static extern nint GFU_AlphaMin_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_RedMax_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_RedMax_get")]
+#endif
   public static extern nint GFU_RedMax_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_GreenMax_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_GreenMax_get")]
+#endif
   public static extern nint GFU_GreenMax_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_BlueMax_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_BlueMax_get")]
+#endif
   public static extern nint GFU_BlueMax_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_AlphaMax_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_AlphaMax_get")]
+#endif
   public static extern nint GFU_AlphaMax_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GFU_MaxCount_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GFU_MaxCount_get")]
+#endif
   public static extern nint GFU_MaxCount_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GMF_ALL_VALID_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GMF_ALL_VALID_get")]
+#endif
   public static extern nint GMF_ALL_VALID_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GMF_PER_DATASET_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GMF_PER_DATASET_get")]
+#endif
   public static extern nint GMF_PER_DATASET_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GMF_ALPHA_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GMF_ALPHA_get")]
+#endif
   public static extern nint GMF_ALPHA_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GMF_NODATA_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GMF_NODATA_get")]
+#endif
   public static extern nint GMF_NODATA_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GARIO_PENDING_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GARIO_PENDING_get")]
+#endif
   public static extern nint GARIO_PENDING_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GARIO_UPDATE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GARIO_UPDATE_get")]
+#endif
   public static extern nint GARIO_UPDATE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GARIO_ERROR_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GARIO_ERROR_get")]
+#endif
   public static extern nint GARIO_ERROR_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GARIO_COMPLETE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GARIO_COMPLETE_get")]
+#endif
   public static extern nint GARIO_COMPLETE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GTO_TIP_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GTO_TIP_get")]
+#endif
   public static extern nint GTO_TIP_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GTO_BIT_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GTO_BIT_get")]
+#endif
   public static extern nint GTO_BIT_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GTO_BSQ_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GTO_BSQ_get")]
+#endif
   public static extern nint GTO_BSQ_get();
 }
 

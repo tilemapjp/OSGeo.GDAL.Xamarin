@@ -5,6 +5,11 @@
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
+#if __IOS__
+using ObjCRuntime;
+#else
+using nint = global::System.Int32;
+#endif
 
 namespace OSGeo.OGR {
 
@@ -34,7 +39,11 @@ class OgrPINVOKE {
     static ExceptionArgumentDelegate argumentNullDelegate = new ExceptionArgumentDelegate(SetPendingArgumentNullException);
     static ExceptionArgumentDelegate argumentOutOfRangeDelegate = new ExceptionArgumentDelegate(SetPendingArgumentOutOfRangeException);
 
+#if __IOS__
     [DllImport("__Internal", EntryPoint="SWIGRegisterExceptionCallbacks_Ogr")]
+#else
+    [DllImport("gdal", EntryPoint="SWIGRegisterExceptionCallbacks_Ogr")]
+#endif
     public static extern void SWIGRegisterExceptionCallbacks_Ogr(
                                 ExceptionDelegate applicationDelegate,
                                 ExceptionDelegate arithmeticDelegate,
@@ -48,54 +57,99 @@ class OgrPINVOKE {
                                 ExceptionDelegate overflowDelegate, 
                                 ExceptionDelegate systemExceptionDelegate);
 
+#if __IOS__
     [DllImport("__Internal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_Ogr")]
+#else
+    [DllImport("gdal", EntryPoint="SWIGRegisterExceptionArgumentCallbacks_Ogr")]
+#endif
     public static extern void SWIGRegisterExceptionCallbacksArgument_Ogr(
                                 ExceptionArgumentDelegate argumentDelegate,
                                 ExceptionArgumentDelegate argumentNullDelegate,
                                 ExceptionArgumentDelegate argumentOutOfRangeDelegate);
 
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingApplicationException(string message) {
       SWIGPendingException.Set(new System.ApplicationException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingArithmeticException(string message) {
       SWIGPendingException.Set(new System.ArithmeticException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingDivideByZeroException(string message) {
       SWIGPendingException.Set(new System.DivideByZeroException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingIndexOutOfRangeException(string message) {
       SWIGPendingException.Set(new System.IndexOutOfRangeException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingInvalidCastException(string message) {
       SWIGPendingException.Set(new System.InvalidCastException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingInvalidOperationException(string message) {
       SWIGPendingException.Set(new System.InvalidOperationException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingIOException(string message) {
       SWIGPendingException.Set(new System.IO.IOException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingNullReferenceException(string message) {
       SWIGPendingException.Set(new System.NullReferenceException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingOutOfMemoryException(string message) {
       SWIGPendingException.Set(new System.OutOfMemoryException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingOverflowException(string message) {
       SWIGPendingException.Set(new System.OverflowException(message, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+	[MonoPInvokeCallback (typeof(ExceptionDelegate))]
+#endif
     static void SetPendingSystemException(string message) {
       SWIGPendingException.Set(new System.SystemException(message, SWIGPendingException.Retrieve()));
     }
-
+#if __IOS__
+  [MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentException(string message, string paramName) {
       SWIGPendingException.Set(new System.ArgumentException(message, paramName, SWIGPendingException.Retrieve()));
     }
+#if __IOS__
+  [MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentNullException(string message, string paramName) {
       Exception e = SWIGPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
       SWIGPendingException.Set(new System.ArgumentNullException(paramName, message));
     }
+#if __IOS__
+  [MonoPInvokeCallback (typeof(ExceptionArgumentDelegate))]
+#endif
     static void SetPendingArgumentOutOfRangeException(string message, string paramName) {
       Exception e = SWIGPendingException.Retrieve();
       if (e != null) message = message + " Inner Exception: " + e.Message;
@@ -170,9 +224,16 @@ class OgrPINVOKE {
     public delegate string SWIGStringDelegate(string message);
     static SWIGStringDelegate stringDelegate = new SWIGStringDelegate(CreateString);
 
+#if __IOS__
     [DllImport("__Internal", EntryPoint="SWIGRegisterStringCallback_Ogr")]
+#else
+    [DllImport("gdal", EntryPoint="SWIGRegisterStringCallback_Ogr")]
+#endif
     public static extern void SWIGRegisterStringCallback_Ogr(SWIGStringDelegate stringDelegate);
 
+#if __IOS__
+  [MonoPInvokeCallback (typeof(SWIGStringDelegate))]
+#endif
     static string CreateString(string cString) {
       return cString;
     }
@@ -193,106 +254,242 @@ class OgrPINVOKE {
   //}
 
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_wkb25DBit_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_wkb25DBit_get")]
+#endif
   public static extern int wkb25DBit_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ogrZMarker_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ogrZMarker_get")]
+#endif
   public static extern int ogrZMarker_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRNullFID_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRNullFID_get")]
+#endif
   public static extern int OGRNullFID_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRUnsetMarker_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRUnsetMarker_get")]
+#endif
   public static extern int OGRUnsetMarker_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCRandomRead_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCRandomRead_get")]
+#endif
   public static extern string OLCRandomRead_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCSequentialWrite_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCSequentialWrite_get")]
+#endif
   public static extern string OLCSequentialWrite_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCRandomWrite_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCRandomWrite_get")]
+#endif
   public static extern string OLCRandomWrite_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCFastSpatialFilter_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCFastSpatialFilter_get")]
+#endif
   public static extern string OLCFastSpatialFilter_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCFastFeatureCount_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCFastFeatureCount_get")]
+#endif
   public static extern string OLCFastFeatureCount_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCFastGetExtent_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCFastGetExtent_get")]
+#endif
   public static extern string OLCFastGetExtent_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCCreateField_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCCreateField_get")]
+#endif
   public static extern string OLCCreateField_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCDeleteField_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCDeleteField_get")]
+#endif
   public static extern string OLCDeleteField_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCReorderFields_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCReorderFields_get")]
+#endif
   public static extern string OLCReorderFields_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCAlterFieldDefn_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCAlterFieldDefn_get")]
+#endif
   public static extern string OLCAlterFieldDefn_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCTransactions_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCTransactions_get")]
+#endif
   public static extern string OLCTransactions_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCDeleteFeature_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCDeleteFeature_get")]
+#endif
   public static extern string OLCDeleteFeature_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCFastSetNextByIndex_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCFastSetNextByIndex_get")]
+#endif
   public static extern string OLCFastSetNextByIndex_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCStringsAsUTF8_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCStringsAsUTF8_get")]
+#endif
   public static extern string OLCStringsAsUTF8_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OLCCreateGeomField_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OLCCreateGeomField_get")]
+#endif
   public static extern string OLCCreateGeomField_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODsCCreateLayer_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODsCCreateLayer_get")]
+#endif
   public static extern string ODsCCreateLayer_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODsCDeleteLayer_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODsCDeleteLayer_get")]
+#endif
   public static extern string ODsCDeleteLayer_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODsCCreateGeomFieldAfterCreateLayer_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODsCCreateGeomFieldAfterCreateLayer_get")]
+#endif
   public static extern string ODsCCreateGeomFieldAfterCreateLayer_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODrCCreateDataSource_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODrCCreateDataSource_get")]
+#endif
   public static extern string ODrCCreateDataSource_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODrCDeleteDataSource_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODrCDeleteDataSource_get")]
+#endif
   public static extern string ODrCDeleteDataSource_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_NONE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_NONE_get")]
+#endif
   public static extern int OGRERR_NONE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_NOT_ENOUGH_DATA_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_NOT_ENOUGH_DATA_get")]
+#endif
   public static extern int OGRERR_NOT_ENOUGH_DATA_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_NOT_ENOUGH_MEMORY_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_NOT_ENOUGH_MEMORY_get")]
+#endif
   public static extern int OGRERR_NOT_ENOUGH_MEMORY_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_UNSUPPORTED_GEOMETRY_TYPE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_UNSUPPORTED_GEOMETRY_TYPE_get")]
+#endif
   public static extern int OGRERR_UNSUPPORTED_GEOMETRY_TYPE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_UNSUPPORTED_OPERATION_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_UNSUPPORTED_OPERATION_get")]
+#endif
   public static extern int OGRERR_UNSUPPORTED_OPERATION_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_CORRUPT_DATA_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_CORRUPT_DATA_get")]
+#endif
   public static extern int OGRERR_CORRUPT_DATA_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_FAILURE_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_FAILURE_get")]
+#endif
   public static extern int OGRERR_FAILURE_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGRERR_UNSUPPORTED_SRS_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGRERR_UNSUPPORTED_SRS_get")]
+#endif
   public static extern int OGRERR_UNSUPPORTED_SRS_get();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_UseExceptions")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_UseExceptions")]
+#endif
   public static extern void UseExceptions();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DontUseExceptions")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DontUseExceptions")]
+#endif
   public static extern void DontUseExceptions();
 
   public class StringListMarshal : IDisposable {
@@ -313,922 +510,2146 @@ class OgrPINVOKE {
   }
 
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StringListDestroy")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StringListDestroy")]
+#endif
   public static extern void StringListDestroy(IntPtr jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MinX_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MinX_set")]
+#endif
   public static extern void Envelope_MinX_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MinX_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MinX_get")]
+#endif
   public static extern double Envelope_MinX_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MaxX_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MaxX_set")]
+#endif
   public static extern void Envelope_MaxX_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MaxX_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MaxX_get")]
+#endif
   public static extern double Envelope_MaxX_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MinY_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MinY_set")]
+#endif
   public static extern void Envelope_MinY_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MinY_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MinY_get")]
+#endif
   public static extern double Envelope_MinY_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MaxY_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MaxY_set")]
+#endif
   public static extern void Envelope_MaxY_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope_MaxY_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope_MaxY_get")]
+#endif
   public static extern double Envelope_MaxY_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_Envelope")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_Envelope")]
+#endif
   public static extern IntPtr new_Envelope();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_Envelope")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_Envelope")]
+#endif
   public static extern void delete_Envelope(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MinX_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MinX_set")]
+#endif
   public static extern void Envelope3D_MinX_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MinX_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MinX_get")]
+#endif
   public static extern double Envelope3D_MinX_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MaxX_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MaxX_set")]
+#endif
   public static extern void Envelope3D_MaxX_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MaxX_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MaxX_get")]
+#endif
   public static extern double Envelope3D_MaxX_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MinY_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MinY_set")]
+#endif
   public static extern void Envelope3D_MinY_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MinY_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MinY_get")]
+#endif
   public static extern double Envelope3D_MinY_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MaxY_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MaxY_set")]
+#endif
   public static extern void Envelope3D_MaxY_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MaxY_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MaxY_get")]
+#endif
   public static extern double Envelope3D_MaxY_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MinZ_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MinZ_set")]
+#endif
   public static extern void Envelope3D_MinZ_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MinZ_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MinZ_get")]
+#endif
   public static extern double Envelope3D_MinZ_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MaxZ_set")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MaxZ_set")]
+#endif
   public static extern void Envelope3D_MaxZ_set(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Envelope3D_MaxZ_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Envelope3D_MaxZ_get")]
+#endif
   public static extern double Envelope3D_MaxZ_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_Envelope3D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_Envelope3D")]
+#endif
   public static extern IntPtr new_Envelope3D();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_Envelope3D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_Envelope3D")]
+#endif
   public static extern void delete_Envelope3D(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_StyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_StyleTable")]
+#endif
   public static extern IntPtr new_StyleTable();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_StyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_StyleTable")]
+#endif
   public static extern void delete_StyleTable(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_AddStyle")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_AddStyle")]
+#endif
   public static extern int StyleTable_AddStyle(HandleRef jarg1, string jarg2, string jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_LoadStyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_LoadStyleTable")]
+#endif
   public static extern int StyleTable_LoadStyleTable(HandleRef jarg1, byte[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_SaveStyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_SaveStyleTable")]
+#endif
   public static extern int StyleTable_SaveStyleTable(HandleRef jarg1, byte[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_Find")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_Find")]
+#endif
   public static extern string StyleTable_Find(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_ResetStyleStringReading")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_ResetStyleStringReading")]
+#endif
   public static extern void StyleTable_ResetStyleStringReading(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_GetNextStyle")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_GetNextStyle")]
+#endif
   public static extern string StyleTable_GetNextStyle(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_StyleTable_GetLastStyleName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_StyleTable_GetLastStyleName")]
+#endif
   public static extern string StyleTable_GetLastStyleName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_name_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_name_get")]
+#endif
   public static extern string Driver_name_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_CreateDataSource")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_CreateDataSource")]
+#endif
   public static extern IntPtr Driver_CreateDataSource(HandleRef jarg1, byte[] jarg2, IntPtr[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_CopyDataSource")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_CopyDataSource")]
+#endif
   public static extern IntPtr Driver_CopyDataSource(HandleRef jarg1, HandleRef jarg2, byte[] jarg3, IntPtr[] jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_Open")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_Open")]
+#endif
   public static extern IntPtr Driver_Open(HandleRef jarg1, byte[] jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_DeleteDataSource")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_DeleteDataSource")]
+#endif
   public static extern int Driver_DeleteDataSource(HandleRef jarg1, byte[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_TestCapability")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_TestCapability")]
+#endif
   public static extern bool Driver_TestCapability(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Driver_GetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Driver_GetName")]
+#endif
   public static extern string Driver_GetName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODriver_Register")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODriver_Register")]
+#endif
   public static extern void Driver_Register(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ODriver_Deregister")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ODriver_Deregister")]
+#endif
   public static extern void Driver_Deregister(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_name_get")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_name_get")]
+#endif
   public static extern string DataSource_name_get(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_DataSource")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_DataSource")]
+#endif
   public static extern void delete_DataSource(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetRefCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetRefCount")]
+#endif
   public static extern int DataSource_GetRefCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetSummaryRefCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetSummaryRefCount")]
+#endif
   public static extern int DataSource_GetSummaryRefCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetLayerCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetLayerCount")]
+#endif
   public static extern int DataSource_GetLayerCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetDriver")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetDriver")]
+#endif
   public static extern IntPtr DataSource_GetDriver(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetName")]
+#endif
   public static extern string DataSource_GetName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_DeleteLayer")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_DeleteLayer")]
+#endif
   public static extern int DataSource_DeleteLayer(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_SyncToDisk")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_SyncToDisk")]
+#endif
   public static extern int DataSource_SyncToDisk(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_CreateLayer")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_CreateLayer")]
+#endif
   public static extern IntPtr DataSource_CreateLayer(HandleRef jarg1, string jarg2, HandleRef jarg3, int jarg4, IntPtr[] jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_CopyLayer")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_CopyLayer")]
+#endif
   public static extern IntPtr DataSource_CopyLayer(HandleRef jarg1, HandleRef jarg2, string jarg3, IntPtr[] jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetLayerByIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetLayerByIndex")]
+#endif
   public static extern IntPtr DataSource_GetLayerByIndex(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetLayerByName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetLayerByName")]
+#endif
   public static extern IntPtr DataSource_GetLayerByName(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_TestCapability")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_TestCapability")]
+#endif
   public static extern bool DataSource_TestCapability(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_ExecuteSQL")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_ExecuteSQL")]
+#endif
   public static extern IntPtr DataSource_ExecuteSQL(HandleRef jarg1, string jarg2, HandleRef jarg3, string jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_ReleaseResultSet")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_ReleaseResultSet")]
+#endif
   public static extern void DataSource_ReleaseResultSet(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_GetStyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_GetStyleTable")]
+#endif
   public static extern IntPtr DataSource_GetStyleTable(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_DataSource_SetStyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_DataSource_SetStyleTable")]
+#endif
   public static extern void DataSource_SetStyleTable(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetRefCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetRefCount")]
+#endif
   public static extern int Layer_GetRefCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetSpatialFilter__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetSpatialFilter__SWIG_0")]
+#endif
   public static extern void Layer_SetSpatialFilter__SWIG_0(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetSpatialFilterRect__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetSpatialFilterRect__SWIG_0")]
+#endif
   public static extern void Layer_SetSpatialFilterRect__SWIG_0(HandleRef jarg1, double jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetSpatialFilter__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetSpatialFilter__SWIG_1")]
+#endif
   public static extern void Layer_SetSpatialFilter__SWIG_1(HandleRef jarg1, int jarg2, HandleRef jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetSpatialFilterRect__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetSpatialFilterRect__SWIG_1")]
+#endif
   public static extern void Layer_SetSpatialFilterRect__SWIG_1(HandleRef jarg1, int jarg2, double jarg3, double jarg4, double jarg5, double jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetSpatialFilter")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetSpatialFilter")]
+#endif
   public static extern IntPtr Layer_GetSpatialFilter(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetAttributeFilter")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetAttributeFilter")]
+#endif
   public static extern int Layer_SetAttributeFilter(HandleRef jarg1, byte[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_ResetReading")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_ResetReading")]
+#endif
   public static extern void Layer_ResetReading(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetName")]
+#endif
   public static extern string Layer_GetName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetGeomType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetGeomType")]
+#endif
   public static extern int Layer_GetGeomType(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetGeometryColumn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetGeometryColumn")]
+#endif
   public static extern string Layer_GetGeometryColumn(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetFIDColumn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetFIDColumn")]
+#endif
   public static extern string Layer_GetFIDColumn(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetFeature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetFeature")]
+#endif
   public static extern IntPtr Layer_GetFeature(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetNextFeature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetNextFeature")]
+#endif
   public static extern IntPtr Layer_GetNextFeature(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetNextByIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetNextByIndex")]
+#endif
   public static extern int Layer_SetNextByIndex(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetFeature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetFeature")]
+#endif
   public static extern int Layer_SetFeature(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_CreateFeature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_CreateFeature")]
+#endif
   public static extern int Layer_CreateFeature(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_DeleteFeature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_DeleteFeature")]
+#endif
   public static extern int Layer_DeleteFeature(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SyncToDisk")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SyncToDisk")]
+#endif
   public static extern int Layer_SyncToDisk(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetLayerDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetLayerDefn")]
+#endif
   public static extern IntPtr Layer_GetLayerDefn(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetFeatureCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetFeatureCount")]
+#endif
   public static extern int Layer_GetFeatureCount(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetExtent")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetExtent")]
+#endif
   public static extern int Layer_GetExtent(HandleRef jarg1, HandleRef jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_TestCapability")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_TestCapability")]
+#endif
   public static extern bool Layer_TestCapability(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_CreateField")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_CreateField")]
+#endif
   public static extern int Layer_CreateField(HandleRef jarg1, HandleRef jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_DeleteField")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_DeleteField")]
+#endif
   public static extern int Layer_DeleteField(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_ReorderField")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_ReorderField")]
+#endif
   public static extern int Layer_ReorderField(HandleRef jarg1, int jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_ReorderFields")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_ReorderFields")]
+#endif
   public static extern int Layer_ReorderFields(HandleRef jarg1, int jarg2, int[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_AlterFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_AlterFieldDefn")]
+#endif
   public static extern int Layer_AlterFieldDefn(HandleRef jarg1, int jarg2, HandleRef jarg3, int jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_CreateGeomField")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_CreateGeomField")]
+#endif
   public static extern int Layer_CreateGeomField(HandleRef jarg1, HandleRef jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_StartTransaction")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_StartTransaction")]
+#endif
   public static extern int Layer_StartTransaction(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_CommitTransaction")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_CommitTransaction")]
+#endif
   public static extern int Layer_CommitTransaction(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_RollbackTransaction")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_RollbackTransaction")]
+#endif
   public static extern int Layer_RollbackTransaction(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_FindFieldIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_FindFieldIndex")]
+#endif
   public static extern int Layer_FindFieldIndex(HandleRef jarg1, string jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetSpatialRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetSpatialRef")]
+#endif
   public static extern IntPtr Layer_GetSpatialRef(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetFeaturesRead")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetFeaturesRead")]
+#endif
   public static extern long Layer_GetFeaturesRead(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetIgnoredFields")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetIgnoredFields")]
+#endif
   public static extern int Layer_SetIgnoredFields(HandleRef jarg1, IntPtr[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_Intersection")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_Intersection")]
+#endif
   public static extern int Layer_Intersection(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_Union")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_Union")]
+#endif
   public static extern int Layer_Union(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SymDifference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SymDifference")]
+#endif
   public static extern int Layer_SymDifference(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_Identity")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_Identity")]
+#endif
   public static extern int Layer_Identity(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_Update")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_Update")]
+#endif
   public static extern int Layer_Update(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_Clip")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_Clip")]
+#endif
   public static extern int Layer_Clip(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_Erase")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_Erase")]
+#endif
   public static extern int Layer_Erase(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, IntPtr[] jarg4, Ogr.GDALProgressFuncDelegate jarg5, string jarg6);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_GetStyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_GetStyleTable")]
+#endif
   public static extern IntPtr Layer_GetStyleTable(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Layer_SetStyleTable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Layer_SetStyleTable")]
+#endif
   public static extern void Layer_SetStyleTable(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_Feature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_Feature")]
+#endif
   public static extern void delete_Feature(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_Feature")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_Feature")]
+#endif
   public static extern IntPtr new_Feature(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetDefnRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetDefnRef")]
+#endif
   public static extern IntPtr Feature_GetDefnRef(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetGeometry")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetGeometry")]
+#endif
   public static extern int Feature_SetGeometry(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetGeometryDirectly")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetGeometryDirectly")]
+#endif
   public static extern int Feature_SetGeometryDirectly(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeometryRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeometryRef")]
+#endif
   public static extern IntPtr Feature_GetGeometryRef(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetGeomField__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetGeomField__SWIG_0")]
+#endif
   public static extern int Feature_SetGeomField__SWIG_0(HandleRef jarg1, int jarg2, HandleRef jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetGeomField__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetGeomField__SWIG_1")]
+#endif
   public static extern int Feature_SetGeomField__SWIG_1(HandleRef jarg1, string jarg2, HandleRef jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetGeomFieldDirectly__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetGeomFieldDirectly__SWIG_0")]
+#endif
   public static extern int Feature_SetGeomFieldDirectly__SWIG_0(HandleRef jarg1, int jarg2, HandleRef jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetGeomFieldDirectly__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetGeomFieldDirectly__SWIG_1")]
+#endif
   public static extern int Feature_SetGeomFieldDirectly__SWIG_1(HandleRef jarg1, string jarg2, HandleRef jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeomFieldRef__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeomFieldRef__SWIG_0")]
+#endif
   public static extern IntPtr Feature_GetGeomFieldRef__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeomFieldRef__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeomFieldRef__SWIG_1")]
+#endif
   public static extern IntPtr Feature_GetGeomFieldRef__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_Clone")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_Clone")]
+#endif
   public static extern IntPtr Feature_Clone(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_Equal")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_Equal")]
+#endif
   public static extern bool Feature_Equal(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldCount")]
+#endif
   public static extern int Feature_GetFieldCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldDefnRef__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldDefnRef__SWIG_0")]
+#endif
   public static extern IntPtr Feature_GetFieldDefnRef__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldDefnRef__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldDefnRef__SWIG_1")]
+#endif
   public static extern IntPtr Feature_GetFieldDefnRef__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeomFieldCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeomFieldCount")]
+#endif
   public static extern int Feature_GetGeomFieldCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeomFieldDefnRef__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeomFieldDefnRef__SWIG_0")]
+#endif
   public static extern IntPtr Feature_GetGeomFieldDefnRef__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeomFieldDefnRef__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeomFieldDefnRef__SWIG_1")]
+#endif
   public static extern IntPtr Feature_GetGeomFieldDefnRef__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsString__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsString__SWIG_0")]
+#endif
   public static extern IntPtr Feature_GetFieldAsString__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsString__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsString__SWIG_1")]
+#endif
   public static extern IntPtr Feature_GetFieldAsString__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsInteger__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsInteger__SWIG_0")]
+#endif
   public static extern int Feature_GetFieldAsInteger__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsInteger__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsInteger__SWIG_1")]
+#endif
   public static extern int Feature_GetFieldAsInteger__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsDouble__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsDouble__SWIG_0")]
+#endif
   public static extern double Feature_GetFieldAsDouble__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsDouble__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsDouble__SWIG_1")]
+#endif
   public static extern double Feature_GetFieldAsDouble__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsDateTime")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsDateTime")]
+#endif
   public static extern void Feature_GetFieldAsDateTime(HandleRef jarg1, int jarg2, out int jarg3, out int jarg4, out int jarg5, out int jarg6, out int jarg7, out int jarg8, out int jarg9);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsIntegerList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsIntegerList")]
+#endif
   public static extern IntPtr Feature_GetFieldAsIntegerList(HandleRef jarg1, int jarg2, out int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsDoubleList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsDoubleList")]
+#endif
   public static extern IntPtr Feature_GetFieldAsDoubleList(HandleRef jarg1, int jarg2, out int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldAsStringList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldAsStringList")]
+#endif
   public static extern IntPtr Feature_GetFieldAsStringList(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_IsFieldSet__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_IsFieldSet__SWIG_0")]
+#endif
   public static extern bool Feature_IsFieldSet__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_IsFieldSet__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_IsFieldSet__SWIG_1")]
+#endif
   public static extern bool Feature_IsFieldSet__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldIndex")]
+#endif
   public static extern int Feature_GetFieldIndex(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetGeomFieldIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetGeomFieldIndex")]
+#endif
   public static extern int Feature_GetGeomFieldIndex(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFID")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFID")]
+#endif
   public static extern int Feature_GetFID(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFID")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFID")]
+#endif
   public static extern int Feature_SetFID(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_DumpReadable")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_DumpReadable")]
+#endif
   public static extern void Feature_DumpReadable(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_UnsetField__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_UnsetField__SWIG_0")]
+#endif
   public static extern void Feature_UnsetField__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_UnsetField__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_UnsetField__SWIG_1")]
+#endif
   public static extern void Feature_UnsetField__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_0")]
+#endif
   public static extern void Feature_SetField__SWIG_0(HandleRef jarg1, int jarg2, byte[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_1")]
+#endif
   public static extern void Feature_SetField__SWIG_1(HandleRef jarg1, string jarg2, byte[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_2")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_2")]
+#endif
   public static extern void Feature_SetField__SWIG_2(HandleRef jarg1, int jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_3")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_3")]
+#endif
   public static extern void Feature_SetField__SWIG_3(HandleRef jarg1, string jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_4")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_4")]
+#endif
   public static extern void Feature_SetField__SWIG_4(HandleRef jarg1, int jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_5")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_5")]
+#endif
   public static extern void Feature_SetField__SWIG_5(HandleRef jarg1, string jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_6")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_6")]
+#endif
   public static extern void Feature_SetField__SWIG_6(HandleRef jarg1, int jarg2, int jarg3, int jarg4, int jarg5, int jarg6, int jarg7, int jarg8, int jarg9);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetField__SWIG_7")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetField__SWIG_7")]
+#endif
   public static extern void Feature_SetField__SWIG_7(HandleRef jarg1, string jarg2, int jarg3, int jarg4, int jarg5, int jarg6, int jarg7, int jarg8, int jarg9);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFieldIntegerList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFieldIntegerList")]
+#endif
   public static extern void Feature_SetFieldIntegerList(HandleRef jarg1, int jarg2, int jarg3, int[] jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFieldDoubleList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFieldDoubleList")]
+#endif
   public static extern void Feature_SetFieldDoubleList(HandleRef jarg1, int jarg2, int jarg3, double[] jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFieldStringList")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFieldStringList")]
+#endif
   public static extern void Feature_SetFieldStringList(HandleRef jarg1, int jarg2, IntPtr[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFieldBinaryFromHexString__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFieldBinaryFromHexString__SWIG_0")]
+#endif
   public static extern void Feature_SetFieldBinaryFromHexString__SWIG_0(HandleRef jarg1, int jarg2, string jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFieldBinaryFromHexString__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFieldBinaryFromHexString__SWIG_1")]
+#endif
   public static extern void Feature_SetFieldBinaryFromHexString__SWIG_1(HandleRef jarg1, string jarg2, string jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFrom")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFrom")]
+#endif
   public static extern int Feature_SetFrom(HandleRef jarg1, HandleRef jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetFromWithMap")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetFromWithMap")]
+#endif
   public static extern int Feature_SetFromWithMap(HandleRef jarg1, HandleRef jarg2, int jarg3, int jarg4, int[] jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetStyleString")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetStyleString")]
+#endif
   public static extern string Feature_GetStyleString(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_SetStyleString")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_SetStyleString")]
+#endif
   public static extern void Feature_SetStyleString(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldType__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldType__SWIG_0")]
+#endif
   public static extern int Feature_GetFieldType__SWIG_0(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Feature_GetFieldType__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Feature_GetFieldType__SWIG_1")]
+#endif
   public static extern int Feature_GetFieldType__SWIG_1(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_FeatureDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_FeatureDefn")]
+#endif
   public static extern void delete_FeatureDefn(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_FeatureDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_FeatureDefn")]
+#endif
   public static extern IntPtr new_FeatureDefn(string jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetName")]
+#endif
   public static extern string FeatureDefn_GetName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetFieldCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetFieldCount")]
+#endif
   public static extern int FeatureDefn_GetFieldCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetFieldDefn")]
+#endif
   public static extern IntPtr FeatureDefn_GetFieldDefn(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetFieldIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetFieldIndex")]
+#endif
   public static extern int FeatureDefn_GetFieldIndex(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_AddFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_AddFieldDefn")]
+#endif
   public static extern void FeatureDefn_AddFieldDefn(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetGeomFieldCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetGeomFieldCount")]
+#endif
   public static extern int FeatureDefn_GetGeomFieldCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetGeomFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetGeomFieldDefn")]
+#endif
   public static extern IntPtr FeatureDefn_GetGeomFieldDefn(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetGeomFieldIndex")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetGeomFieldIndex")]
+#endif
   public static extern int FeatureDefn_GetGeomFieldIndex(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_AddGeomFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_AddGeomFieldDefn")]
+#endif
   public static extern void FeatureDefn_AddGeomFieldDefn(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_DeleteGeomFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_DeleteGeomFieldDefn")]
+#endif
   public static extern int FeatureDefn_DeleteGeomFieldDefn(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetGeomType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetGeomType")]
+#endif
   public static extern int FeatureDefn_GetGeomType(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_SetGeomType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_SetGeomType")]
+#endif
   public static extern void FeatureDefn_SetGeomType(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_GetReferenceCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_GetReferenceCount")]
+#endif
   public static extern int FeatureDefn_GetReferenceCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_IsGeometryIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_IsGeometryIgnored")]
+#endif
   public static extern int FeatureDefn_IsGeometryIgnored(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_SetGeometryIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_SetGeometryIgnored")]
+#endif
   public static extern void FeatureDefn_SetGeometryIgnored(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_IsStyleIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_IsStyleIgnored")]
+#endif
   public static extern int FeatureDefn_IsStyleIgnored(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_SetStyleIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_SetStyleIgnored")]
+#endif
   public static extern void FeatureDefn_SetStyleIgnored(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FeatureDefn_IsSame")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FeatureDefn_IsSame")]
+#endif
   public static extern int FeatureDefn_IsSame(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_FieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_FieldDefn")]
+#endif
   public static extern void delete_FieldDefn(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_FieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_FieldDefn")]
+#endif
   public static extern IntPtr new_FieldDefn(string jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetName")]
+#endif
   public static extern string FieldDefn_GetName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetNameRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetNameRef")]
+#endif
   public static extern string FieldDefn_GetNameRef(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_SetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_SetName")]
+#endif
   public static extern void FieldDefn_SetName(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetFieldType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetFieldType")]
+#endif
   public static extern int FieldDefn_GetFieldType(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_SetType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_SetType")]
+#endif
   public static extern void FieldDefn_SetType(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetJustify")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetJustify")]
+#endif
   public static extern int FieldDefn_GetJustify(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_SetJustify")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_SetJustify")]
+#endif
   public static extern void FieldDefn_SetJustify(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetWidth")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetWidth")]
+#endif
   public static extern int FieldDefn_GetWidth(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_SetWidth")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_SetWidth")]
+#endif
   public static extern void FieldDefn_SetWidth(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetPrecision")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetPrecision")]
+#endif
   public static extern int FieldDefn_GetPrecision(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_SetPrecision")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_SetPrecision")]
+#endif
   public static extern void FieldDefn_SetPrecision(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetTypeName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetTypeName")]
+#endif
   public static extern string FieldDefn_GetTypeName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_GetFieldTypeName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_GetFieldTypeName")]
+#endif
   public static extern string FieldDefn_GetFieldTypeName(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_IsIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_IsIgnored")]
+#endif
   public static extern int FieldDefn_IsIgnored(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_FieldDefn_SetIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_FieldDefn_SetIgnored")]
+#endif
   public static extern void FieldDefn_SetIgnored(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_GeomFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_GeomFieldDefn")]
+#endif
   public static extern void delete_GeomFieldDefn(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_GeomFieldDefn")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_GeomFieldDefn")]
+#endif
   public static extern IntPtr new_GeomFieldDefn(string jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_GetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_GetName")]
+#endif
   public static extern string GeomFieldDefn_GetName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_GetNameRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_GetNameRef")]
+#endif
   public static extern string GeomFieldDefn_GetNameRef(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_SetName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_SetName")]
+#endif
   public static extern void GeomFieldDefn_SetName(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_GetFieldType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_GetFieldType")]
+#endif
   public static extern int GeomFieldDefn_GetFieldType(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_SetType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_SetType")]
+#endif
   public static extern void GeomFieldDefn_SetType(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_GetSpatialRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_GetSpatialRef")]
+#endif
   public static extern IntPtr GeomFieldDefn_GetSpatialRef(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_SetSpatialRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_SetSpatialRef")]
+#endif
   public static extern void GeomFieldDefn_SetSpatialRef(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_IsIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_IsIgnored")]
+#endif
   public static extern int GeomFieldDefn_IsIgnored(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeomFieldDefn_SetIgnored")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeomFieldDefn_SetIgnored")]
+#endif
   public static extern void GeomFieldDefn_SetIgnored(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CreateGeometryFromWkb")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CreateGeometryFromWkb")]
+#endif
   public static extern IntPtr CreateGeometryFromWkb(int jarg1, IntPtr jarg2, HandleRef jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CreateGeometryFromWkt")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CreateGeometryFromWkt")]
+#endif
   public static extern IntPtr CreateGeometryFromWkt(ref string jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CreateGeometryFromGML")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CreateGeometryFromGML")]
+#endif
   public static extern IntPtr CreateGeometryFromGML(string jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_CreateGeometryFromJson")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_CreateGeometryFromJson")]
+#endif
   public static extern IntPtr CreateGeometryFromJson(string jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_BuildPolygonFromEdges")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_BuildPolygonFromEdges")]
+#endif
   public static extern IntPtr BuildPolygonFromEdges(HandleRef jarg1, int jarg2, int jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ApproximateArcAngles")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ApproximateArcAngles")]
+#endif
   public static extern IntPtr ApproximateArcAngles(double jarg1, double jarg2, double jarg3, double jarg4, double jarg5, double jarg6, double jarg7, double jarg8, double jarg9);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ForceToPolygon")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ForceToPolygon")]
+#endif
   public static extern IntPtr ForceToPolygon(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ForceToLineString")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ForceToLineString")]
+#endif
   public static extern IntPtr ForceToLineString(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ForceToMultiPolygon")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ForceToMultiPolygon")]
+#endif
   public static extern IntPtr ForceToMultiPolygon(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ForceToMultiPoint")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ForceToMultiPoint")]
+#endif
   public static extern IntPtr ForceToMultiPoint(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_ForceToMultiLineString")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_ForceToMultiLineString")]
+#endif
   public static extern IntPtr ForceToMultiLineString(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_delete_Geometry")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_delete_Geometry")]
+#endif
   public static extern void delete_Geometry(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_new_Geometry")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_new_Geometry")]
+#endif
   public static extern IntPtr new_Geometry(int jarg1, string jarg2, int jarg3, IntPtr jarg4, string jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ExportToWkt")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ExportToWkt")]
+#endif
   public static extern int Geometry_ExportToWkt(HandleRef jarg1, out string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ExportToGML__SWIG_0")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ExportToGML__SWIG_0")]
+#endif
   public static extern string Geometry_ExportToGML__SWIG_0(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ExportToGML__SWIG_1")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ExportToGML__SWIG_1")]
+#endif
   public static extern string Geometry_ExportToGML__SWIG_1(HandleRef jarg1, IntPtr[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ExportToKML")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ExportToKML")]
+#endif
   public static extern string Geometry_ExportToKML(HandleRef jarg1, string jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ExportToJson")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ExportToJson")]
+#endif
   public static extern string Geometry_ExportToJson(HandleRef jarg1, IntPtr[] jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_AddPoint")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_AddPoint")]
+#endif
   public static extern void Geometry_AddPoint(HandleRef jarg1, double jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_AddPoint_2D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_AddPoint_2D")]
+#endif
   public static extern void Geometry_AddPoint_2D(HandleRef jarg1, double jarg2, double jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_AddGeometryDirectly")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_AddGeometryDirectly")]
+#endif
   public static extern int Geometry_AddGeometryDirectly(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_AddGeometry")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_AddGeometry")]
+#endif
   public static extern int Geometry_AddGeometry(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Clone")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Clone")]
+#endif
   public static extern IntPtr Geometry_Clone(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetGeometryType")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetGeometryType")]
+#endif
   public static extern int Geometry_GetGeometryType(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetGeometryName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetGeometryName")]
+#endif
   public static extern string Geometry_GetGeometryName(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Length")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Length")]
+#endif
   public static extern double Geometry_Length(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Area")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Area")]
+#endif
   public static extern double Geometry_Area(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetArea")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetArea")]
+#endif
   public static extern double Geometry_GetArea(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetPointCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetPointCount")]
+#endif
   public static extern int Geometry_GetPointCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetX")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetX")]
+#endif
   public static extern double Geometry_GetX(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetY")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetY")]
+#endif
   public static extern double Geometry_GetY(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetZ")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetZ")]
+#endif
   public static extern double Geometry_GetZ(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetPoint")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetPoint")]
+#endif
   public static extern void Geometry_GetPoint(HandleRef jarg1, int jarg2, double[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetPoint_2D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetPoint_2D")]
+#endif
   public static extern void Geometry_GetPoint_2D(HandleRef jarg1, int jarg2, double[] jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetGeometryCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetGeometryCount")]
+#endif
   public static extern int Geometry_GetGeometryCount(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_SetPoint")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_SetPoint")]
+#endif
   public static extern void Geometry_SetPoint(HandleRef jarg1, int jarg2, double jarg3, double jarg4, double jarg5);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_SetPoint_2D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_SetPoint_2D")]
+#endif
   public static extern void Geometry_SetPoint_2D(HandleRef jarg1, int jarg2, double jarg3, double jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetGeometryRef")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetGeometryRef")]
+#endif
   public static extern IntPtr Geometry_GetGeometryRef(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Simplify")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Simplify")]
+#endif
   public static extern IntPtr Geometry_Simplify(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_SimplifyPreserveTopology")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_SimplifyPreserveTopology")]
+#endif
   public static extern IntPtr Geometry_SimplifyPreserveTopology(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Boundary")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Boundary")]
+#endif
   public static extern IntPtr Geometry_Boundary(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetBoundary")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetBoundary")]
+#endif
   public static extern IntPtr Geometry_GetBoundary(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ConvexHull")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ConvexHull")]
+#endif
   public static extern IntPtr Geometry_ConvexHull(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Buffer")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Buffer")]
+#endif
   public static extern IntPtr Geometry_Buffer(HandleRef jarg1, double jarg2, int jarg3);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Intersection")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Intersection")]
+#endif
   public static extern IntPtr Geometry_Intersection(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Union")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Union")]
+#endif
   public static extern IntPtr Geometry_Union(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_UnionCascaded")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_UnionCascaded")]
+#endif
   public static extern IntPtr Geometry_UnionCascaded(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Difference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Difference")]
+#endif
   public static extern IntPtr Geometry_Difference(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_SymDifference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_SymDifference")]
+#endif
   public static extern IntPtr Geometry_SymDifference(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_SymmetricDifference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_SymmetricDifference")]
+#endif
   public static extern IntPtr Geometry_SymmetricDifference(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Distance")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Distance")]
+#endif
   public static extern double Geometry_Distance(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Empty")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Empty")]
+#endif
   public static extern void Geometry_Empty(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_IsEmpty")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_IsEmpty")]
+#endif
   public static extern bool Geometry_IsEmpty(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_IsValid")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_IsValid")]
+#endif
   public static extern bool Geometry_IsValid(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_IsSimple")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_IsSimple")]
+#endif
   public static extern bool Geometry_IsSimple(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_IsRing")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_IsRing")]
+#endif
   public static extern bool Geometry_IsRing(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Intersects")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Intersects")]
+#endif
   public static extern bool Geometry_Intersects(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Intersect")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Intersect")]
+#endif
   public static extern bool Geometry_Intersect(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Equals")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Equals")]
+#endif
   public static extern bool Geometry_Equals(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Equal")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Equal")]
+#endif
   public static extern bool Geometry_Equal(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Disjoint")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Disjoint")]
+#endif
   public static extern bool Geometry_Disjoint(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Touches")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Touches")]
+#endif
   public static extern bool Geometry_Touches(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Crosses")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Crosses")]
+#endif
   public static extern bool Geometry_Crosses(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Within")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Within")]
+#endif
   public static extern bool Geometry_Within(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Contains")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Contains")]
+#endif
   public static extern bool Geometry_Contains(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Overlaps")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Overlaps")]
+#endif
   public static extern bool Geometry_Overlaps(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_TransformTo")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_TransformTo")]
+#endif
   public static extern int Geometry_TransformTo(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Transform")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Transform")]
+#endif
   public static extern int Geometry_Transform(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetSpatialReference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetSpatialReference")]
+#endif
   public static extern IntPtr Geometry_GetSpatialReference(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_AssignSpatialReference")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_AssignSpatialReference")]
+#endif
   public static extern void Geometry_AssignSpatialReference(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_CloseRings")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_CloseRings")]
+#endif
   public static extern void Geometry_CloseRings(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_FlattenTo2D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_FlattenTo2D")]
+#endif
   public static extern void Geometry_FlattenTo2D(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Segmentize")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Segmentize")]
+#endif
   public static extern void Geometry_Segmentize(HandleRef jarg1, double jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetEnvelope")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetEnvelope")]
+#endif
   public static extern void Geometry_GetEnvelope(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetEnvelope3D")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetEnvelope3D")]
+#endif
   public static extern void Geometry_GetEnvelope3D(HandleRef jarg1, HandleRef jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_Centroid")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_Centroid")]
+#endif
   public static extern IntPtr Geometry_Centroid(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_PointOnSurface")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_PointOnSurface")]
+#endif
   public static extern IntPtr Geometry_PointOnSurface(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_WkbSize")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_WkbSize")]
+#endif
   public static extern int Geometry_WkbSize(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetCoordinateDimension")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetCoordinateDimension")]
+#endif
   public static extern int Geometry_GetCoordinateDimension(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_SetCoordinateDimension")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_SetCoordinateDimension")]
+#endif
   public static extern void Geometry_SetCoordinateDimension(HandleRef jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_GetDimension")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_GetDimension")]
+#endif
   public static extern int Geometry_GetDimension(HandleRef jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_Geometry_ExportToWkb")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_Geometry_ExportToWkb")]
+#endif
   public static extern int Geometry_ExportToWkb(HandleRef jarg1, int jarg2, IntPtr jarg3, int jarg4);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGetDriverCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGetDriverCount")]
+#endif
   public static extern int GetDriverCount();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetOpenDSCount")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetOpenDSCount")]
+#endif
   public static extern int GetOpenDSCount();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_SetGenerate_DB2_V72_BYTE_ORDER")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_SetGenerate_DB2_V72_BYTE_ORDER")]
+#endif
   public static extern int SetGenerate_DB2_V72_BYTE_ORDER(int jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_RegisterAll")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_RegisterAll")]
+#endif
   public static extern void RegisterAll();
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GeometryTypeToName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GeometryTypeToName")]
+#endif
   public static extern string GeometryTypeToName(int jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetFieldTypeName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetFieldTypeName")]
+#endif
   public static extern string GetFieldTypeName(int jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_GetOpenDS")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_GetOpenDS")]
+#endif
   public static extern IntPtr GetOpenDS(int jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OOpen")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OOpen")]
+#endif
   public static extern IntPtr Open(byte[] jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OOpenShared")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OOpenShared")]
+#endif
   public static extern IntPtr OpenShared(byte[] jarg1, int jarg2);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGetDriverByName")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGetDriverByName")]
+#endif
   public static extern IntPtr GetDriverByName(string jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGetDriver")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGetDriver")]
+#endif
   public static extern IntPtr GetDriver(int jarg1);
 
+#if __IOS__
   [DllImport("__Internal", EntryPoint="CSharp_OGeneralCmdLineProcessor")]
+#else
+  [DllImport("gdal", EntryPoint="CSharp_OGeneralCmdLineProcessor")]
+#endif
   public static extern IntPtr GeneralCmdLineProcessor(IntPtr[] jarg1, int jarg2);
 }
 
