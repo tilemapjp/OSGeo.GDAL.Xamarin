@@ -5,15 +5,12 @@ using OSGeo.GDAL;
 namespace OSGeo.GDAL.Test
 {
 	[TestFixture]
-	public class GdalConstant
+	public class Tiff
 	{
-
-		[SetUp]
 		public void Setup ()
 		{
 			Gdal.AllRegister ();
 		}
-
 
 		[TearDown]
 		public void Tear ()
@@ -21,14 +18,7 @@ namespace OSGeo.GDAL.Test
 		}
 
 		[Test]
-		public void ConstCheck ()
-		{
-			var fail = (int)GdalConst.CE_Failure;
-			Assert.AreEqual (3, fail);
-		}
-
-		[Test]
-		public void LoadTiff ()
+		public void Load ()
 		{
 			var type = this.GetType(); 
 			var manifestResourceStream = type.Assembly.GetManifestResourceStream ("OSGeo.GDAL.Test.bogota.tif");
@@ -48,34 +38,34 @@ namespace OSGeo.GDAL.Test
 				Assert.AreEqual ("GTiff", dataSet.GetDriver ().GetDescription ());
 				Assert.AreEqual ("GeoTIFF", dataSet.GetDriver ().GetMetadataItem (GdalConst.GDAL_DMD_LONGNAME, ""));
 
-				Assert.AreEqual (512, dataSet.RasterXSize);
-				Assert.AreEqual (512, dataSet.RasterYSize);
-				Assert.AreEqual (1, dataSet.RasterCount);
+				var xSize = dataSet.RasterXSize;
+				var ySize = dataSet.RasterYSize;
+				var count = dataSet.RasterCount;
+				Console.WriteLine ("Size is {0}x{1}x{2}", xSize, ySize, count);
+				Assert.AreEqual (512, xSize);
+				Assert.AreEqual (512, ySize);
+				Assert.AreEqual (1, count);
 
+				var projection = dataSet.GetProjectionRef ();
+				Console.WriteLine ( "Projection is `{0}'", projection );
 				Assert.AreEqual (
 					"LOCAL_CS[\"unnamed\",GEOGCS[\"unknown\",DATUM[\"unknown\",SPHEROID[\"unretrievable - using WGS84\",6378137,298.257223563]],PRIMEM[\"Greenwich\",0],UNIT[,0.0174532925199433]],AUTHORITY[\"EPSG\",\"21892\"],UNIT[\"unknown\",1]]",
-					dataSet.GetProjectionRef ()
+					projection
 				);
 
 				dataSet.GetGeoTransform (adfGeoTransform);
-				Assert.AreEqual (440720, adfGeoTransform [0]);
-				Assert.AreEqual (100000, adfGeoTransform [3]);
-				Assert.AreEqual (60, adfGeoTransform [1]);
-				Assert.AreEqual (-60, adfGeoTransform [5]);
+				var originX = adfGeoTransform [0];
+				var originY = adfGeoTransform [3];
+				Console.WriteLine ("Origin = ({0},{1})", originX, originY);
+				Assert.AreEqual (440720, originX);
+				Assert.AreEqual (100000, originY);
+
+				var pixelW = adfGeoTransform [1];
+				var pixelH = adfGeoTransform [5];
+				Console.WriteLine ("Pixel Size = ({0},{1})", pixelW, pixelH);
+				Assert.AreEqual (60, pixelW);
+				Assert.AreEqual (-60, pixelH);
 			}
-		}
-
-		[Test]
-		[Ignore ("another time")]
-		public void Ignore ()
-		{
-			Assert.True (false);
-		}
-
-		[Test]
-		public void Inconclusive ()
-		{
-			Assert.Inconclusive ("Inconclusive");
 		}
 	}
 }

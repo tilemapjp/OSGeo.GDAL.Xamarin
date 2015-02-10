@@ -119,8 +119,8 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="UnitTestAppDelegate.cs" />
-    <Compile Include="T.cs" />
-    <Compile Include="GdalConstant.cs" />
+    <Compile Include="Constant.cs" />
+    <Compile Include="Tiff.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

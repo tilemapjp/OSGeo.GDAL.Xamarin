@@ -48,8 +48,11 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\OSGeo.GDAL.Test.iOS\GdalConstant.cs">
-      <Link>GdalConstant.cs</Link>
+    <Compile Include="..\OSGeo.GDAL.Test.iOS\Constant.cs">
+      <Link>Constant.cs</Link>
+    </Compile>
+    <Compile Include="..\OSGeo.GDAL.Test.iOS\Tiff.cs">
+      <Link>Tiff.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
