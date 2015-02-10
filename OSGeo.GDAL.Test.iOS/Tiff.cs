@@ -12,25 +12,13 @@ namespace OSGeo.GDAL.Test
 		[SetUp]
 		public void Setup ()
 		{
-			Gdal.AllRegister ();
-
-			var type = this.GetType(); 
-			var manifestResourceStream = type.Assembly.GetManifestResourceStream ("OSGeo.GDAL.Test.bogota.tif");
-
-			var documents =
-				System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-			var file = System.IO.Path.Combine(documents, "bogota.tif");
-			var fileStream = System.IO.File.OpenWrite (file);
-
-			manifestResourceStream.CopyTo (fileStream);
-			fileStream.Close ();
-
-			dataSet = Gdal.Open (file, Access.GA_ReadOnly);
+			dataSet = Gdal.Open (StartPhase.BogotaTiffPath, Access.GA_ReadOnly);
 		}
 
 		[TearDown]
 		public void Tear ()
 		{
+			dataSet.Dispose ();
 		}
 
 		[Test]

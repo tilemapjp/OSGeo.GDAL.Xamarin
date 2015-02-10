@@ -54,6 +54,12 @@
     <Compile Include="..\OSGeo.GDAL.Test.iOS\Tiff.cs">
       <Link>Tiff.cs</Link>
     </Compile>
+    <Compile Include="..\OSGeo.GDAL.Test.iOS\Create.cs">
+      <Link>Create.cs</Link>
+    </Compile>
+    <Compile Include="..\OSGeo.GDAL.Test.iOS\StartPhase.cs">
+      <Link>StartPhase.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

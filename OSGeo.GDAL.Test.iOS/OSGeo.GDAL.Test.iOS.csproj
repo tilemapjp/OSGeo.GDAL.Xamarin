@@ -121,6 +121,8 @@
     <Compile Include="UnitTestAppDelegate.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Tiff.cs" />
+    <Compile Include="Create.cs" />
+    <Compile Include="StartPhase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

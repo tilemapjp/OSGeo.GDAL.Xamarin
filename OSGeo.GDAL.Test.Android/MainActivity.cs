@@ -4,13 +4,14 @@ using Android.App;
 using Android.OS;
 using Xamarin.Android.NUnitLite;
 
-namespace OSGeo.GDAL.Test.Android
+namespace OSGeo.GDAL.Test
 {
-	[Activity (Label = "OSGeo.GDAL.Test.Android", MainLauncher = true)]
+	[Activity (Label = "OSGeo.GDAL.Test", MainLauncher = true)]
 	public class MainActivity : TestSuiteActivity
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
+			StartPhase.Init ();
 			// tests can be inside the main assembly
 			AddTest (Assembly.GetExecutingAssembly ());
 			// or in any reference assemblies
