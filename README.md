@@ -1,2 +1,2 @@
-# gdal_mobile
-Test compile script of gdal for iOS/Android, to make Xamarin binding of gdal.
+# OSGeo.GDAL.Xamarin
+OSGeo.GDAL binding for Xamarin iOS/Android. (Test is not completed)
