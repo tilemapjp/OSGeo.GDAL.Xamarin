@@ -7,6 +7,7 @@ namespace OSGeo.GDAL.Test
 	[TestFixture]
 	public class Tiff
 	{
+		[SetUp]
 		public void Setup ()
 		{
 			Gdal.AllRegister ();
