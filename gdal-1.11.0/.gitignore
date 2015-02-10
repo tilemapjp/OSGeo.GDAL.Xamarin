@@ -28,6 +28,7 @@ frmts/jpeg/libjpeg12/*.h
 libgdal.a
 libgdal.so
 libgdal.so.*
+apps/ogrlineref
 apps/gdal-config
 apps/gdal-config-inst
 apps/gdal_contour

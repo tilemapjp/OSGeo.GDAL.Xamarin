@@ -6,3 +6,12 @@ Makefile
 proj.pc
 
 src/.deps
+src/.libs
+!src/*.c
+!src/*.h
+src/proj
+src/geod
+src/cs2cs
+src/nad2bin
+src/stamp-h1
+src/proj_config.h
