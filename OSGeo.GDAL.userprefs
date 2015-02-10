@@ -1,10 +1,9 @@
 ﻿<Properties StartupItem="OSGeo.GDAL.Test.iOS/OSGeo.GDAL.Test.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.tilemapper2" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="OSGeo.GDAL.Test.iOS/T.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="Android.1ab27261" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="OSGeo.GDAL.Test.iOS/Tiff.cs">
     <Files>
-      <File FileName="OSGeo.GDAL.Test.iOS/UnitTestAppDelegate.cs" Line="1" Column="1" />
-      <File FileName="OSGeo.GDAL.Test.iOS/OSGeo.GDAL.Test.Shared/GdalConst.cs" Line="18" Column="18" />
-      <File FileName="OSGeo.GDAL.Test.iOS/T.cs" Line="1" Column="1" />
+      <File FileName="OSGeo.GDAL.Test.iOS/Constant.cs" Line="1" Column="1" />
+      <File FileName="OSGeo.GDAL.Test.iOS/Tiff.cs" Line="40" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
