@@ -5,6 +5,10 @@
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
+#if __IOS__
+#else
+using nint = global::System.Int32;
+#endif
 
 namespace OSGeo.GDAL {
 

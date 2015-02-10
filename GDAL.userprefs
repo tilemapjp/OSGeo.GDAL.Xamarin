@@ -1,13 +1,13 @@
 ﻿<Properties StartupItem="GDAL.iOS.Sample/GDAL.iOS.Sample.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.tilemapper2" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="GDAL.iOS.Sample/AppDelegate.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GDAL.Android.Sample/MainActivity.cs">
     <Files>
-      <File FileName="GDAL.iOS/const/GdalConst.cs" Line="1" Column="1" />
       <File FileName="GDAL.iOS/const/GdalConstPINVOKE.cs" Line="1" Column="1" />
-      <File FileName="GDAL.iOS.Sample/Main.cs" Line="1" Column="1" />
-      <File FileName="GDAL.iOS.Sample/AppDelegate.cs" Line="1" Column="1" />
-      <File FileName="GDAL.iOS/gdal/Gdal.cs" Line="1" Column="1" />
       <File FileName="GDAL.iOS/gdal/GdalPINVOKE.cs" Line="1" Column="1" />
+      <File FileName="GDAL.iOS/ogr/OgrPINVOKE.cs" Line="1" Column="1" />
+      <File FileName="GDAL.iOS/const/GdalConst.cs" Line="12" Column="12" />
+      <File FileName="GDAL.iOS.Sample/AppDelegate.cs" Line="1" Column="1" />
+      <File FileName="GDAL.Android.Sample/MainActivity.cs" Line="51" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

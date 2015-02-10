@@ -1,40 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
-using Foundation;
-using UIKit;
+using Android.App;
+using Android.Content;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using Android.OS;
 
 using OSGeo.GDAL;
+using System.IO;
 
 namespace GDAL.Sample
 {
-	// The UIApplicationDelegate for the application. This class is responsible for launching the
-	// User Interface of the application, as well as listening (and optionally responding) to
-	// application events from iOS.
-	[Register ("AppDelegate")]
-	public partial class AppDelegate : UIApplicationDelegate
+	[Activity (Label = "GDAL.Sample", MainLauncher = true, Icon = "@drawable/icon")]
+	public class MainActivity : Activity
 	{
-		// class-level declarations
-		UIWindow window;
+		int count = 1;
 
-		//
-		// This method is invoked when the application has loaded and is ready to run. In this
-		// method you should instantiate the window, load the UI into it and then make the window
-		// visible.
-		//
-		// You have 17 seconds to return from this method, or iOS will terminate your application.
-		//
-		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+		protected override void OnCreate (Bundle bundle)
 		{
-			// create a new window instance based on the screen size
-			window = new UIWindow (UIScreen.MainScreen.Bounds);
+			base.OnCreate (bundle);
+
+			// Set our view from the "main" layout resource
+			SetContentView (Resource.Layout.Main);
+
+			// Get our button from the layout resource,
+			// and attach an event to it
+			Button button = FindViewById<Button> (Resource.Id.myButton);
 			
-			// If you have defined a root view controller, set it here:
-			// window.RootViewController = myViewController;
-			
-			// make the window visible
-			window.MakeKeyAndVisible ();
+			button.Click += delegate {
+				button.Text = string.Format ("{0} clicks!", count++);
+			};
 
 			Console.WriteLine ("{0}",GdalConst.CE_Failure);
 			Gdal.AllRegister ();
@@ -57,7 +53,7 @@ namespace GDAL.Sample
 				Console.WriteLine ("{0} {1}",
 					dataSet.GetDriver ().GetDescription (),
 					dataSet.GetDriver ().GetMetadataItem (GdalConst.GDAL_DMD_LONGNAME, ""));
-
+					
 				Console.WriteLine ("Size is {0}x{1}x{2}", 
 					dataSet.RasterXSize, dataSet.RasterYSize, dataSet.RasterCount );
 
@@ -71,9 +67,9 @@ namespace GDAL.Sample
 				Console.WriteLine ("Pixel Size = ({0},{1})",
 					adfGeoTransform [1], adfGeoTransform [5]);
 			}
-			
-			return true;
+
 		}
 	}
 }
+
 

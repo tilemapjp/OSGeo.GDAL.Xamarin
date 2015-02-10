@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace GDAL.iOS.Sample
+namespace GDAL.Sample
 {
 	public class Application
 	{
